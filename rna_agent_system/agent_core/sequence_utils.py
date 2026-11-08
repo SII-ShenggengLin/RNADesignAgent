@@ -292,7 +292,7 @@ def export_codon_usage_csv(species: str, out_path: Path | None = None) -> Path:
         Species name or alias resolvable via ``resolve_species_name``.
     out_path
         Destination CSV path. Defaults to
-        ``<project>/experiments/results/codon_tables/<canonical>.csv``.
+        ``<project>/workspace/codon_tables/<canonical>.csv``.
 
     Returns
     -------
@@ -307,7 +307,7 @@ def export_codon_usage_csv(species: str, out_path: Path | None = None) -> Path:
     canonical = resolve_species_name(species)
     table = _load_builtin_codon_tables()[canonical]
     if out_path is None:
-        results_dir = Path(__file__).resolve().parents[1] / "experiments" / "results"
+        results_dir = Path(__file__).resolve().parents[1] / "workspace"
         out_path = results_dir / "codon_tables" / f"{canonical.replace(' ', '_')}.csv"
     out_path = Path(out_path)
     lines = ["#,,"]  # LD C++ parser skips the first line unconditionally

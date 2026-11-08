@@ -48,7 +48,7 @@ def test_default_self_model_grades(tmp_path: Path) -> None:
     # E7: MRL oracle verified on its families -> transferred (downgrade) elsewhere.
     d = runtime.review_tool_call("predict_5utr_mrl_with_gemorna")
     assert d is not None and d.verdict == "downgrade"
-    # DECISIONS (bb): the 3'UTR oracle's declared use is scoring_annotation
+    # : the 3'UTR oracle's declared use is scoring_annotation
     # (demoted from ranking_objective) — unprofiled annotation use is allowed;
     # the demotion lives in the workflow's ASF objective set instead.
     d = runtime.review_tool_call("predict_3utr_stability_with_gemorna")

@@ -5,7 +5,7 @@
   "description": "siRNA design using target_fasta_path instead of target_sequence",
   "input": {
     "mode": "generic",
-    "target_fasta_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Platform/tasks/04_sirna_design/04_sirna_design_015_target_fasta.fa",
+    "target_fasta_path": "data/benchmarks/RNA-BioBench-Platform/tasks/04_sirna_design/04_sirna_design_015_target_fasta.fa",
     "candidate_count": 4,
     "off_target_scan": false,
     "species": "homo_sapiens",

@@ -20,7 +20,7 @@ class FullLengthScoringFunction:
     cds_component      : combined_score / cds_length
     utr5_mrl           : predicted mean ribosomal load
     utr3_stability     : predicted 3'UTR stability — REPORT-ONLY DIAGNOSTIC
-                         since DECISIONS (bb): never an ASF ranking dimension
+                         since : never an ASF ranking dimension
                          (unprofiled oracle), still computed and reported
     full_mfe_score     : inverted full-length MFE (more negative = higher raw)
     junction_5utr_cds_score : inverted 5'UTR-CDS junction MFE/nt minus GC-diff penalty

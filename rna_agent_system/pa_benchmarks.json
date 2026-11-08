@@ -152,7 +152,7 @@
     "workflow": "rna_aptamer_design",
     "params_by_turn": [
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
         "chain_id": "A",
         "aptamer_length": 35,
         "n_odesign_samples": 5,
@@ -166,7 +166,7 @@
         }
       },
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
         "chain_id": "A",
         "aptamer_length": 35,
         "n_odesign_samples": 10,
@@ -180,7 +180,7 @@
         }
       },
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
         "chain_id": "A",
         "aptamer_length": 25,
         "n_odesign_samples": 10,
@@ -210,7 +210,7 @@
       }
     ],
     "constants": {
-      "STRUCTURE_PATH": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
+      "STRUCTURE_PATH": "data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
       "PROTEIN_SEQUENCE": "NTASWFTALTQHGKEDLKFPRGQGVPINTNSSPDDQIGYYRRATRRIRMKDLSPRWYFYYLGTGPEAGLPYGANKDGIIWVATEGALNTPKDHIGTRNPANNAAIVLQLPQGTTLPKGFYA"
     }
   },
@@ -284,7 +284,7 @@
     "workflow": "ires_prediction",
     "params_by_turn": [
       {
-        "sequence_filepath": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
+        "sequence_filepath": "data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
         "iresfinder_mode": 2,
         "window_size": 174,
         "step_size": 50,
@@ -293,7 +293,7 @@
         "run_structural_validation": true
       },
       {
-        "sequence_filepath": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
+        "sequence_filepath": "data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
         "iresfinder_mode": 2,
         "window_size": 120,
         "step_size": 30,
@@ -302,7 +302,7 @@
         "run_structural_validation": true
       },
       {
-        "sequence_filepath": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
+        "sequence_filepath": "data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
         "iresfinder_mode": 0,
         "probability_threshold": 0.5,
         "top_n_candidates": 5,
@@ -544,7 +544,7 @@
     "workflow": "rna_aptamer_design",
     "params_by_turn": [
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb",
         "chain_id": "A",
         "aptamer_length": 30,
         "n_odesign_samples": 5,
@@ -555,7 +555,7 @@
         }
       },
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb",
         "chain_id": "A",
         "aptamer_length": 40,
         "n_odesign_samples": 5,
@@ -566,7 +566,7 @@
         }
       },
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb",
         "chain_id": "A",
         "aptamer_length": 40,
         "n_odesign_samples": 15,
@@ -579,7 +579,7 @@
       }
     ],
     "constants": {
-      "STRUCTURE_PATH": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb"
+      "STRUCTURE_PATH": "data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb"
     }
   },
   "021": {
@@ -652,12 +652,12 @@
     "workflow": "ires_prediction",
     "params_by_turn": [
       {
-        "sequence_filepath": "REDACTED-PATH/workspace/pa023_5utr.fa",
+        "sequence_filepath": "data/benchmarks/RNA-BioBench-ProcessAware/fixtures/pa023_5utr.fa",
         "iresfinder_mode": 0,
         "probability_threshold": 0.5
       },
       {
-        "sequence_filepath": "REDACTED-PATH/workspace/pa023_5utr.fa",
+        "sequence_filepath": "data/benchmarks/RNA-BioBench-ProcessAware/fixtures/pa023_5utr.fa",
         "iresfinder_mode": 2,
         "window_size": 120,
         "step_size": 30,
@@ -673,7 +673,7 @@
       "UTR5_SEQUENCE": "AGCGAAUGCGGAGGAAGAUGUACGUCGGUAUAAUCAUAUAAGGCGGGCACCGCUAAGAGCUAAAUUGGCCGUUCACUCCCACAUCGUAGGGAUCGCUAUUGAAACAGCCUUCAGUUCAAGUAUAGCGUUUCGUUGAGUUGCACUCGAAGCUACAGGCAGGGAGUUGGAGGUACUUGGCCCAAUGCCUCGCCCCUCUAGUUUUUGAGCGCUCUCCUUAAGCUAAUGAAUGUGGAAGGUCAACAAUGAGCACCUGCUUGGCUUUCGUAAUAGUCAUGGGACAAGACAUUGCCGUACUACGGUUAUAGGCUUUUGCGUUCAGUUUUUGACUUUUCUGUUGUCCUGGGCUUCACUAUGUGUCGCACAACACAGUAAUACGACCUACCCCCGCUAUACAGCCAAC",
       "MODE1_FILE": "data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/pa023_mode1_5utr.fa"
     },
-    "legacy_input_note": "Turns 1-2 reference workspace/pa023_5utr.fa — an absolute path into the ephemeral workspace root registered in the pre-reset era (the file was never git-tracked; 291 commits checked). The sequence is preserved verbatim in this entry's constants.UTR5_SEQUENCE (the turn-3 fixture pa023_mode1_5utr.fa is its 100-300 window). The canonical copy now lives at data/benchmarks/RNA-BioBench-ProcessAware/fixtures/pa023_5utr.fa; copy it to workspace/pa023_5utr.fa before running PA_023 (the frozen exp8/exp24/exp25 corpora recorded turns 1-2 failing on its absence; restored 2026-09-11 and re-measured by experiments/exp25b_pa023_restore_addendum.py — see benchmarks README)."
+    "legacy_input_note": "Turns 1-2 originally referenced workspace/pa023_5utr.fa, an absolute path into the ephemeral workspace root of the development machine (the file was never git-tracked). The canonical, byte-identical copy now lives at data/benchmarks/RNA-BioBench-ProcessAware/fixtures/pa023_5utr.fa and the turns point at it directly. The sequence is also preserved verbatim in this entry's constants.UTR5_SEQUENCE (the turn-3 fixture pa023_mode1_5utr.fa is its 100-300 window)."
   },
   "024": {
     "workflow": "full_length_mrna_design",
@@ -796,7 +796,7 @@
     "workflow": "rna_aptamer_design",
     "params_by_turn": [
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1mbo.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/1mbo.pdb",
         "chain_id": "A",
         "aptamer_length": 30,
         "n_odesign_samples": 5,
@@ -807,7 +807,7 @@
         }
       },
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/6lyz.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/6lyz.pdb",
         "chain_id": "A",
         "aptamer_length": 35,
         "n_odesign_samples": 10,
@@ -830,7 +830,7 @@
         }
       },
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1hao.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/1hao.pdb",
         "chain_id": "H",
         "hotspot_residues": "H/46,H/67,H/70,H/72,H/97",
         "aptamer_length": 15,
@@ -843,9 +843,9 @@
       }
     ],
     "constants": {
-      "STRUCT_1MBO": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1mbo.pdb (myoglobin, chain A)",
-      "STRUCT_6LYZ": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/6lyz.pdb (hen egg-white lysozyme, chain A)",
-      "STRUCT_1HAO": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1hao.pdb (human alpha-thrombin, chain H, exosite I/II hotspots — TBA aptamer target, Kd 25 nM)",
+      "STRUCT_1MBO": "data/benchmarks/RNA-BioBench-Aptamer/structures/1mbo.pdb (myoglobin, chain A)",
+      "STRUCT_6LYZ": "data/benchmarks/RNA-BioBench-Aptamer/structures/6lyz.pdb (hen egg-white lysozyme, chain A)",
+      "STRUCT_1HAO": "data/benchmarks/RNA-BioBench-Aptamer/structures/1hao.pdb (human alpha-thrombin, chain H, exosite I/II hotspots — TBA aptamer target, Kd 25 nM)",
       "PROVENANCE": "batch-B (2026-08-19): three aptamer targets unused by PA_009/PA_020 (RNA-BioBench-Aptamer)"
     }
   },
@@ -853,7 +853,7 @@
     "workflow": "rna_aptamer_design",
     "params_by_turn": [
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1ca2.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/1ca2.pdb",
         "chain_id": "A",
         "navigation": true,
         "reference_point": {
@@ -863,7 +863,7 @@
         }
       },
       {
-        "protein_structure_path": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/3cna.pdb",
+        "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/3cna.pdb",
         "chain_id": "A",
         "navigation": true,
         "reference_point": {
@@ -874,8 +874,8 @@
       }
     ],
     "constants": {
-      "STRUCT_1CA2": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/1ca2.pdb (carbonic anhydrase II, chain A)",
-      "STRUCT_3CNA": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Aptamer/structures/3cna.pdb (concanavalin A, chain A)",
+      "STRUCT_1CA2": "data/benchmarks/RNA-BioBench-Aptamer/structures/1ca2.pdb (carbonic anhydrase II, chain A)",
+      "STRUCT_3CNA": "data/benchmarks/RNA-BioBench-Aptamer/structures/3cna.pdb (concanavalin A, chain A)",
       "PROVENANCE": "batch-B (2026-08-19): GenNav navigation=True production path (workflow v2.1.0) on two fresh targets; PA_020/PA_027 cover navigation=False"
     }
   },

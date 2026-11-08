@@ -4,7 +4,7 @@ Protein sequence → CDS candidates via MrnaCdsDesignWorkflow (generate + evalua
 → CDS selection → UTR pool → full-length assembly → full-length / UTR
 incremental evaluation → full-length scoring → ranking → WorkflowResult.
 
-Two-step design (DECISIONS (bb), 2026-09-07 wet-lab-preparation redesign,
+Two-step design (, 2026-09-07 wet-lab-preparation redesign,
 following the GEMORNA Science 2025 full-length protocol "first select the
 optimal CDS, then pair UTRs"):
 
@@ -26,7 +26,7 @@ optimal CDS, then pair UTRs"):
 
 Ranking governance: the ASF objective set is (cds_component, utr5_mrl,
 full_mfe_score). ``utr3_stability`` was demoted from a ranking objective to a
-report-only diagnostic dimension (DECISIONS (bb)): its GEMORNA predictor
+report-only diagnostic dimension : its GEMORNA predictor
 oracle carries no profiling evidence under this task type (SelfModel
 ``unprofiled``), and ranking on an unprofiled oracle contradicted the
 platform's own governance narrative. The metric is still computed and
@@ -90,7 +90,7 @@ _UTR_PRESETS: list[str] = ["short", "medium", "long"]
 # User-facing objectives used for reference-point (ASF) selection and the
 # Pareto frontier. Junction scores and utr3_stability remain internal
 # diagnostics: utr3_stability was demoted from a ranking objective to a
-# report-only diagnostic (DECISIONS (bb)) because its GEMORNA predictor
+# report-only diagnostic because its GEMORNA predictor
 # oracle carries no profiling evidence under this task type (SelfModel
 # ``unprofiled``) and ranking on an unprofiled oracle contradicted the
 # platform's governance narrative.
@@ -100,9 +100,9 @@ _USER_FACING_OBJECTIVES: tuple[str, ...] = (
     "full_mfe_score",
 )
 
-# Ranking governance (DECISIONS (p)): oracle-backed objectives and their
+# Ranking governance : oracle-backed objectives and their
 # evidence sources. ``cds_component`` / ``full_mfe_score`` are deterministic
-# compute (DECISIONS (j)) and never enter the mechanism. RNASTOP's
+# compute and never enter the mechanism. RNASTOP's
 # ``overall_stability`` is a report-only diagnostic, not an ASF dimension, so
 # its E18 ranking failure demotes nothing here — its blocked enforce calls
 # cost a diagnostic metric only.
@@ -212,7 +212,7 @@ class FullLengthMrnaDesignInput(BaseModel):
         default=DEFAULT_CAI_SPECIES,
         description=f"Species for CAI computation. Built-in: {format_cai_species_aliases()}.",
     )
-    utr_mode: Literal["short", "medium", "long", "all"] = Field(default="all", description="UTR pool presets drawn from GEMORNA generation (DECISIONS (bb)): 'all' draws 12 5'UTRs + 10 3'UTRs across short/medium/long (the GEMORNA paper's screening scale); a single preset draws only that preset. The assertion-verified benchmark UTR pool (BNT162b2 pair, LinearDesign-paper 5'UTR, natural HBA1 pair) is always included and competes in the same admission + ASF ranking.")
+    utr_mode: Literal["short", "medium", "long", "all"] = Field(default="all", description="UTR pool presets drawn from GEMORNA generation : 'all' draws 12 5'UTRs + 10 3'UTRs across short/medium/long (the GEMORNA paper's screening scale); a single preset draws only that preset. The assertion-verified benchmark UTR pool (BNT162b2 pair, LinearDesign-paper 5'UTR, natural HBA1 pair) is always included and competes in the same admission + ASF ranking.")
     run_fold: bool = Field(default=True, description="Whether to fold the full-length mRNA sequence for secondary-structure evaluation.")
     run_gc: bool = Field(default=True, description="Whether to compute GC-content of the full-length mRNA sequence.")
     reference_point: Optional[dict[str, float]] = Field(
@@ -224,7 +224,7 @@ class FullLengthMrnaDesignInput(BaseModel):
             "Use target_cds_mfe and target_cds_cai to specify CDS objectives; they are "
             "automatically converted into the internal cds_component. "
             "utr3_stability is no longer a ranking objective (demoted to a report-only "
-            "diagnostic, DECISIONS (bb)) and is rejected here loudly."
+            "diagnostic,) and is rejected here loudly."
         ),
     )
     target_cds_mfe: Optional[float] = Field(
@@ -289,7 +289,7 @@ class FullLengthMrnaDesignInput(BaseModel):
                         "reference_point key 'utr3_stability' is no longer a ranking "
                         "objective: the GEMORNA 3'UTR stability predictor is unprofiled "
                         "under this task type and was demoted to a report-only "
-                        "diagnostic dimension (DECISIONS (bb)). Allowed: "
+                        "diagnostic dimension . Allowed: "
                         f"{allowed}. Use target_cds_mfe and target_cds_cai to specify "
                         "CDS objectives."
                     )
@@ -383,7 +383,7 @@ class FullLengthMrnaDesignWorkflow(
     input_model = FullLengthMrnaDesignInput
     description = (
         "Design full-length mRNA (5'UTR + CDS + 3'UTR) from protein sequence: "
-        "two-step design (DECISIONS (bb)) — CDS sub-design via "
+        "two-step design — CDS sub-design via "
         "MrnaCdsDesignWorkflow (GenNav-λ constraint navigation by default) "
         "with per-profile CDS selection, then one UTR pool per run (GEMORNA "
         "screening-scale draws + verified benchmark UTRs) under "
@@ -494,7 +494,7 @@ class FullLengthMrnaDesignWorkflow(
         return result
 
     def generate_candidates(self, inp: FullLengthMrnaDesignInput) -> list[Candidate]:
-        """Generate full-length candidates via the two-step design (DECISIONS (bb)).
+        """Generate full-length candidates via the two-step design .
 
         Step 1: Delegate CDS generation to MrnaCdsDesignWorkflow (GenNav-λ
         navigation by default: up to 15 delivered CDS; static recipe up to 6),
@@ -639,7 +639,7 @@ class FullLengthMrnaDesignWorkflow(
         return unique
 
     # ─────────────────────────────────────────────────────────────────────────
-    # Two-step design helpers (DECISIONS (bb))
+    # Two-step design helpers
     # ─────────────────────────────────────────────────────────────────────────
 
     def _select_cds_for_full_length(
@@ -709,7 +709,7 @@ class FullLengthMrnaDesignWorkflow(
             _try_pick(cand)
 
         self._workflow_state["_cds_selection"] = {
-            "policy": "two_step_best_per_band (DECISIONS (bb))",
+            "policy": "two_step_best_per_band ",
             "pool_size": len(scored),
             "selected": [
                 {
@@ -731,7 +731,7 @@ class FullLengthMrnaDesignWorkflow(
         return selected
 
     def _build_utr_pool(self, inp: FullLengthMrnaDesignInput) -> dict[str, Any]:
-        """Build the per-run UTR pool (DECISIONS (bb)).
+        """Build the per-run UTR pool .
 
         GEMORNA draws at the paper's screening scale + the benchmark UTRs,
         admission-screened by U1/U2; the 5'UTR shortlist is ranked by the
@@ -739,7 +739,7 @@ class FullLengthMrnaDesignWorkflow(
         benchmarks in-silico to be selected. The 3'UTR shortlist is
         admission-survival order (benchmarks first, then generation order) —
         a compute cap, not a ranking: ``utr3_stability`` is a report-only
-        diagnostic (DECISIONS (bb)) and no unprofiled oracle orders the pool.
+        diagnostic and no unprofiled oracle orders the pool.
         """
         presets = self._resolve_utr_presets(inp.utr_mode)
         pool5: list[dict[str, Any]] = []
@@ -825,7 +825,7 @@ class FullLengthMrnaDesignWorkflow(
         )[: utr_pool.UTR3_SHORTLIST_MAX]
 
         pool_state = {
-            "policy": "gemorna_screening_scale_plus_benchmarks (DECISIONS (bb))",
+            "policy": "gemorna_screening_scale_plus_benchmarks ",
             "utr5_pool": pool5,
             "utr3_pool": pool3,
             "utr5_shortlist": shortlist5,
@@ -1041,7 +1041,7 @@ class FullLengthMrnaDesignWorkflow(
         Returns ``(best_candidate, pareto_frontier, raw_reference_point, candidate_asf_map)``.
         """
         objectives = list(_USER_FACING_OBJECTIVES)
-        # Ranking governance (DECISIONS (p)): assemble the objective set from
+        # Ranking governance : assemble the objective set from
         # CapGate verdicts before ranking — mode-independent; demoted dims
         # drop for the whole pool equally and survive as annotations.
         assembly = assemble_for_workflow(
@@ -1063,7 +1063,7 @@ class FullLengthMrnaDesignWorkflow(
                 f"{ranking.ranking_dims} of measurable {assembly.ranking_dims}"
             )
         # A user reference point naming a demoted dim must be told why the
-        # key no longer ranks (loud, not silent — DECISIONS (o) semantics).
+        # key no longer ranks (loud, not silent — semantics).
         for key in (inp.reference_point or {}):
             if key in assembly.demoted:
                 notes.append(

@@ -66,7 +66,7 @@ from agent_core.workflows.multi_objective import apply_reference_point_ranking
 
 _LOGGER = logging.getLogger("agent_core.workflows.rna_aptamer_design")
 
-# Ranking governance (DECISIONS (p)): all three ASF objectives are oracle-
+# Ranking governance : all three ASF objectives are oracle-
 # backed. Under the packaged SelfModel every component failed E1 profiling on
 # every family, so assembly demotes all three and the workflow delivers the
 # ``ranking_evidence_unavailable`` degrade (annotations intact, generation
@@ -1189,7 +1189,7 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
         Returns ``(best_candidate, pareto_frontier, raw_reference_point, candidate_asf_map)``.
         """
         objectives = ["egarps_component", "rhofold_component", "iptm_component"]
-        # Ranking governance (DECISIONS (p)): assemble the objective set from
+        # Ranking governance : assemble the objective set from
         # CapGate verdicts — mode-independent. When every dim is demoted the
         # ranking has no evidence basis and the caller delivers the
         # ``ranking_evidence_unavailable` degrade instead of a fabricated ASF.
@@ -1517,9 +1517,8 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
         3v03/BSA LYS-316, ALA-367), because the assert requires one representative
         atom per token. Symptom at this level: ``candidate_generation_failed`` with
         ``no_sequences_extracted_from_odesign_output`` (the service HTTP call itself
-        returns 200). Structures must be CB-complete before inference — repair with
-        ``experiments/repair_structure_cb.py`` (originals under
-        ``data/benchmarks/RNA-BioBench-Aptamer/structures/originals/``).
+        returns 200). Structures must be CB-complete before inference (originals
+        under ``data/benchmarks/RNA-BioBench-Aptamer/structures/originals/``).
         """
         cap_result = self._invoke_and_record(
             "run_odesign_inference",
@@ -1743,9 +1742,9 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
             # aptamer itself — the extracted "protein" is garbage/none, Protenix
             # complex prediction is skipped downstream, and every designed
             # candidate gets iptm_component = 0. This is silent: scoring still
-            # "works". Before changing this, check experiments/
-            # run_known_aptamer_validation.py, which deliberately extracts from
-            # the target chain instead and documents the comparability caveat.
+            # "works". Before changing this, note that the known-aptamer validation
+            # campaign deliberately extracted from the target chain instead and
+            # documented the comparability caveat.
             return "".join(seq_parts) if seq_parts else None
         except Exception as exc:
             _LOGGER.debug("protein_sequence_extraction_failed err=%s", exc)

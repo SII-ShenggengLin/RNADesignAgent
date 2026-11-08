@@ -1,5 +1,5 @@
 """Tests for the UTR admission rules and the benchmark UTR asset
-(agent_core/generation/utr_pool.py, DECISIONS (bb)).
+(agent_core/generation/utr_pool.py,).
 
 Rule boundaries pin the literature thresholds verbatim:
 
@@ -196,7 +196,7 @@ def test_benchmark_asset_tamper_detection(tmp_path, monkeypatch):
 
 def test_module_registers_deliberately_unimplemented_rules():
     """Rules without a citable quantitative threshold are documented as NOT
-    implemented (DECISIONS (bb)) — the module must not grow hidden screens."""
+    implemented — the module must not grow hidden screens."""
     src = importlib.reload(utr_pool).__doc__ or ""
     for concept in ("U-content", "GU-rich", "AAUAAA"):
         assert concept in src

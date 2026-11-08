@@ -8,7 +8,7 @@ workflow with heterogeneous multi-objective candidate pools
 scalarization, and normalization logic through
 :func:`apply_reference_point_ranking`.
 
-Ranking-policy notes (2026-08-20 ASF audit, DECISIONS.md (n)):
+Ranking-policy notes (2026-08-20 ASF audit):
 
 - A dimension missing for *one* candidate is imputed at the pool-worst
   normalized value (0.0), never omitted: dropping a term from the Chebyshev

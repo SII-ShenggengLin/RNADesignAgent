@@ -458,7 +458,7 @@ class TestLayer2Workflow:
         cands = wf.generate_candidates(inp)
         assert len(cands) > 0
 
-        # DECISIONS (bb): preset coverage lives in the pool (short/medium/long
+        # : preset coverage lives in the pool (short/medium/long
         # draws), while the ranked shortlist selects freely across presets and
         # the always-included benchmark UTRs.
         pool = wf._workflow_state["_utr_pool"]

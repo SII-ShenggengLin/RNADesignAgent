@@ -22,9 +22,9 @@ rna_agent_system/workspace/*
 rna_agent_system/test_workspace_*/
 rna_agent_system/workspace_test_*/
 
-# Literature-search cache (regenerable; experiment verdicts/summaries under
-# experiments/results/ ARE committed as the paper's evidence base)
-rna_agent_system/experiments/lit_cache/
+# Internal experiment working directory (frozen records and drivers are kept
+# locally and in the Zenodo data deposit; not part of the public repository)
+rna_agent_system/experiments/
 
 # Compiled binaries in submodules (should be rebuilt on target host)
 rna_agent_system/external_repos/LinearDesign/bin/

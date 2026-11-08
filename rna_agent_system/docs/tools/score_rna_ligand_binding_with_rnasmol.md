@@ -122,4 +122,4 @@ Other preprocessing facts:
 - SMILES that produce empty / bond-less / degenerate molecular graphs are rejected with HTTP 400.
 - PPR matrix uses `alpha=0.1`; top-k sparsification uses `k=5`.
 
-**Verified parity (2026-08-11)**: post-fix the service reproduces the official upstream `test.py` reference metrics exactly — `robin_molperturbation` test AUROC **0.9744**, `pdb_molperturbation` test AUROC **0.9828**; decoy case studies rank the true binder at 2/1601 (FMN_ribocil) and 7/265 (MALAT1_furamidine). Boundary panel: `experiments/results/rnasmol_boundary_panel.json`.
+**Verified parity (2026-08-11)**: post-fix the service reproduces the official upstream `test.py` reference metrics exactly — `robin_molperturbation` test AUROC **0.9744**, `pdb_molperturbation` test AUROC **0.9828**; decoy case studies rank the true binder at 2/1601 (FMN_ribocil) and 7/265 (MALAT1_furamidine).

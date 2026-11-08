@@ -131,12 +131,12 @@ total_score = combined_score
 
 > **File**: `workflows/full_length_mrna_design.py` | **QualityProfile**: `FULL_LENGTH_MRNA_QUALITY_PROFILE`
 
-**Purpose**: Design complete mRNA (5'UTR + CDS + 3'UTR) via the two-step protocol (DECISIONS (bb), the GEMORNA-paper "first select the optimal CDS, then pair UTRs" order): CDS selection, then one benchmark-anchored UTR pool per run under literature-grounded admission rules, ranking by reference-point (ASF) optimization.
+**Purpose**: Design complete mRNA (5'UTR + CDS + 3'UTR) via the two-step protocol (the GEMORNA-paper "first select the optimal CDS, then pair UTRs" order): CDS selection, then one benchmark-anchored UTR pool per run under literature-grounded admission rules, ranking by reference-point (ASF) optimization.
 
 **Pipeline**
 1. **Generate — Step 1 (CDS)** — CDS via `MrnaCdsDesignWorkflow` (GenNav-λ navigation by default); every delivered CDS is evaluated once and at most one CDS per navigation profile (static recipe: top three) is selected by the shared CDS combined score — UTR draws are never resampled per CDS, so CDS ranking cannot be confounded by UTR sampling variance.
 2. **Generate — Step 2 (UTR pool)** — one pool per run: GEMORNA draws at the paper's screening scale (12 5'UTRs + 10 3'UTRs across short/medium/long) plus the assertion-verified benchmark UTRs (`agent_core/generation/utr_pool.py`, `agent_core/data/utr_benchmarks/`: BNT162b2 5'UTR (template-verified 51-nt alpha-globin-derived form) + 94-nt AES–mtRNR1 3'UTR, the LinearDesign-paper 5'UTR, the natural HBA1 pair). The pool passes the admission rules U1 (no upstream AUG — Kozak 1986/1989; Sample et al. 2019) and U2 (no Class-II AUUUA tandem ARE — Chen & Shyu 1995); assembled constructs pass the Kozak structure gates U3 (5'-terminal 60-nt window MFE > −30 kcal/mol; −30 hairpin 12 nt from the cap blocked 40S entry) and U4 (no 150-nt window ≤ −61 kcal/mol through AUG+15; hp7 stall threshold). The 5'UTR shortlist (≤6) is ranked by the certified MRL oracle — a generated UTR is only selected when it outranks the clinical benchmarks in-silico; the 3'UTR shortlist (≤6) is admission-survival order (benchmarks first) — a compute cap, not a ranking.
-3. **Evaluate** — full-length MFE, 5'UTR MRL, 3'UTR stability (report-only diagnostic since DECISIONS (bb)), U content, **full-length GC content**, **junction MFE** (5'UTR–CDS, CDS–3'UTR), **junction GC diff**, **junction full-length ddG** (5'UTR–CDS, report-only; IRES potential and RNASTOP overall stability are computed by underlying tools but are not propagated into the coordinator metrics in the current implementation)
+3. **Evaluate** — full-length MFE, 5'UTR MRL, 3'UTR stability (report-only diagnostic), U content, **full-length GC content**, **junction MFE** (5'UTR–CDS, CDS–3'UTR), **junction GC diff**, **junction full-length ddG** (5'UTR–CDS, report-only; IRES potential and RNASTOP overall stability are computed by underlying tools but are not propagated into the coordinator metrics in the current implementation)
 4. **Score** — per-module raw scores are computed for reference-point optimization
 5. **Rank** — `rank_and_format()` sorts candidates by ASF distance to the reference point and returns a Pareto frontier on the user-facing objectives
 
@@ -154,7 +154,7 @@ total_score = combined_score
 | `utr5_mrl` | 5'UTR | Predicted mean ribosomal load (higher = better) |
 | `full_mfe_score` | 5'UTR, CDS, 3'UTR | Inverted full-length MFE (higher = less negative) |
 
-`utr3_stability` was demoted from a ranking objective to a report-only diagnostic (DECISIONS (bb)): its GEMORNA predictor oracle is unprofiled under this task type and ranking on an unprofiled oracle contradicted the platform's governance narrative. The metric is still computed and reported; `reference_point` keys naming it fail loudly with the demotion reason.
+`utr3_stability` was demoted from a ranking objective to a report-only diagnostic: its GEMORNA predictor oracle is unprofiled under this task type and ranking on an unprofiled oracle contradicted the platform's governance narrative. The metric is still computed and reported; `reference_point` keys naming it fail loudly with the demotion reason.
 
 The CDS dimension is supplied indirectly via `target_cds_mfe` and `target_cds_cai` (see below); it is synthesized into the internal `cds_component` = (`-mfe + codons*log(CAI)`) / `cds_length_nt`.
 
@@ -172,7 +172,7 @@ The junction GC-diff compares the GC content of the actual UTR and CDS fragments
 | Issue type | Meaning | Action |
 |------------|---------|--------|
 (The BMC coordination layer that consumed these gap diagnoses was removed on
-2026-08-18 after triple falsification — DECISIONS.md (a), (m). The ASF
+2026-08-18 after triple falsification. The ASF
 reference-point ranking above is unaffected.)
 
 > **Note (v2.8.0)**: The fragment-fold AUG/Kozak burial booleans and the junction codon-shuffling repair path were removed after three pre-registered experiments (P1 v2, P2, Phase 0 ddG pilot) falsified fragment burial as a translation-initiation proxy. Translation-start openness at the 5'UTR–CDS junction is now reported as a full-length constrained-fold ddG (`junction_5utr_cds_ddg_open_w1/w2` = MFE_constrained − MFE_unconstrained on the full construct, W1 = CDS start −6..+9, W2 = 5'UTR tail 60 nt + CDS head 30 nt clipped to the actual UTR). ddG is a report/profile metric only — it never triggers automatic repair.
@@ -216,11 +216,10 @@ semantics:
   conservative dominance (a candidate missing a dimension cannot dominate one
   that has it).
 
-**Ranking governance (2026-08-21, DECISIONS (p))**
+**Ranking governance (2026-08-21)**
 
 Before ranking, every ASF workflow assembles its objective set from CapGate
-verdicts (`agent_core/calibrated/objective_assembly.py`, design doc
-[`RANKING_GOVERNANCE.md`](RANKING_GOVERNANCE.md)):
+verdicts (`agent_core/calibrated/objective_assembly.py`):
 
 - verified oracle → dimension kept; transferred-verified → kept + flag;
   failed (direct or transferred) → **demoted to `scoring_annotation`**
@@ -501,20 +500,20 @@ The non-dominated candidate set is always returned in `WorkflowResult.pareto_fro
 
 **GenNav navigation mode (opt-in, production v4, 2026-09-04)**
 
-Setting `navigation: true` replaces the single static ODesign gear with the generation-layer constraint navigation (pure-function core: `agent_core/generation/gennav_aptamer.py`; the v2/v3/v4 repair rounds were measured on the Exp-29 campaign arc — see DECISIONS.md rows 29–30):
+Setting `navigation: true` replaces the single static ODesign gear with the generation-layer constraint navigation (pure-function core: `agent_core/generation/gennav_aptamer.py`; the v2/v3/v4 repair rounds were measured on the Exp-29 campaign arc):
 
 1. **Staged band-central probe** — one ODesign sample at each of the six lattice lengths nearest the three band centres (seed 42), folded with LinearFold (8015) and graded against the pre-registered constraint matrix v3 (per-profile length band, GC window, homopolymer cap, stem cap). The remaining lattice stays available as explore gears with band-mean imputed rates.
 2. **Adaptive reinforcement** — rounds of ODesign requests (≤ 6 samples, seeds 7/99; endgame closing rounds may commit the remainder up to 12) with the band served least-served-first (anti-starvation rotation) and the gear within the band chosen by a shrunken pass rate (k + m·band_rate)/(n + m) plus a UCB optimism bonus c/√(n+1) — unsampled gears compete with sampled ones on the same scale. Deterministic — zero LLM calls.
 3. **D1-aware stopping and delivery** — a band counts as complete only when the diversity-greedy delivery actually yields the full five (the matrix-pass count alone used to declare false completion); delivery = matrix-pass filter → fixed utility order (stem asc, |GC−0.55| asc) → D1 greedy top-5 (pairwise normalized edit distance ≥ 0.15) per profile (compact 25–34 / standard 40–55 / extended 61–80 nt). Shortfalls are explicit degrades.
 
-The generation budget is capped at 48 raw candidates by default; `navigation_raw_budget` (6–200) overrides the cap for budget-constrained campaigns — on the 39-target expanded pool the navigator is significantly better under tight caps (10:2, McNemar P = 0.039 at cap 16) and the static-split parity regime begins near 24–32 (the two-sided regime characterization, `experiments/results/exp29_aptamer_campaign_arc/expanded_summary.json`). The loop stops early once every profile's delivery is full. Every ODesign/LinearFold call goes through the capability layer (CapGate audit trail), and the full navigation trace (probe, rounds, gaps, deliveries) is written to `_state_writeback["_gennav_trace"]`. Delivered candidates then enter the standard two-stage evaluation and ASF ranking with `nav_bands` / `nav_gear` / `nav_matrix_pass` metadata. A run where no candidate passes any profile fails with the dedicated `navigation_delivery_empty` error (explicit degrade, not a silent empty result).
+The generation budget is capped at 48 raw candidates by default; `navigation_raw_budget` (6–200) overrides the cap for budget-constrained campaigns — on the 39-target expanded pool the navigator is significantly better under tight caps (10:2, McNemar P = 0.039 at cap 16) and the static-split parity regime begins near 24–32 (the two-sided regime characterization). The loop stops early once every profile's delivery is full. Every ODesign/LinearFold call goes through the capability layer (CapGate audit trail), and the full navigation trace (probe, rounds, gaps, deliveries) is written to `_state_writeback["_gennav_trace"]`. Delivered candidates then enter the standard two-stage evaluation and ASF ranking with `nav_bands` / `nav_gear` / `nav_matrix_pass` metadata. A run where no candidate passes any profile fails with the dedicated `navigation_delivery_empty` error (explicit degrade, not a silent empty result).
 
 **QualityAgent** (advisory by default): produces a `QualityReport` for every run. The `QualityAgent` focuses on user-intent alignment and exploration strategy. Retry decisions are made by the `SpecialistAgent` based on the `QualityReport` and the `quality_auto_retry` setting; retry is triggered on hard failures (tool failures, empty candidates).
 
 > **History**: the BMC Type-II coordination layer (`AptamerCoordinator` rounds:
 > hotspot expansion / length-seed-sample adjustments) was removed on
 > 2026-08-18 after the coordination-gain narrative was falsified
-> (DECISIONS.md (a), (m)); the ASF/Pareto ranking shown above is unchanged.
+> the ASF/Pareto ranking shown above is unchanged.
 > Both navigation modes are production paths: the aptamer-side module above
 > (v2.1.0) and the mRNA-side GenNav-λ (v1.2.0 wiring, parameters v2.4 —
 > budget-matched, registered-anchor bands, synonymous-diversity expander;

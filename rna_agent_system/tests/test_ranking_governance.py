@@ -1,6 +1,6 @@
-"""Ranking-governance tests: verdict-driven objective assembly (DECISIONS (p)).
+"""Ranking-governance tests: verdict-driven objective assembly .
 
-Pins docs/RANKING_GOVERNANCE.md §7 against the packaged SelfModel
+Pins the ranking-governance degrade rules against the packaged SelfModel
 (``default_self_model.json``): per-workflow assembly outcomes, mode
 independence, the aptamer ``ranking_evidence_unavailable`` degrade, gated-
 annotation recognition, and the no-op guarantee for the all-compute / all-
@@ -83,7 +83,7 @@ FULL_LENGTH_REFS = {
     "utr5_mrl": ObjectiveRef(
         "utr5_mrl", "predict_5utr_mrl_with_gemorna", "gemorna_5utr_mrl"
     ),
-    # DECISIONS (bb): utr3_stability demoted from a ranking objective to a
+    # : utr3_stability demoted from a ranking objective to a
     # report-only diagnostic — no longer in the full-length ref table.
 }
 
@@ -122,7 +122,7 @@ def test_assembly_pinning_full_length_all_kept(packaged_self_model) -> None:
     )
     # utr5_mrl: E7-verified on all families -> transferred-verified (keep+flag).
     # cds_component / full_mfe_score: deterministic compute, no ref.
-    # utr3_stability: demoted out of the objective set entirely (DECISIONS (bb)).
+    # utr3_stability: demoted out of the objective set entirely .
     assert a.ranking_dims == objectives
     assert a.kept_flags == {"utr5_mrl": "transferred"}
     assert a.demoted == {}
@@ -142,7 +142,7 @@ def test_assembly_pinning_tertiary_unprofiled_under_task_key(packaged_self_model
     a = assemble_ranking_objectives(
         objectives, TERTIARY_REFS, packaged_self_model, "rna_tertiary_structure_design"
     )
-    # DECISIONS (k): RhoFold gates under the *calling* task type; the E1
+    # : RhoFold gates under the *calling* task type; the E1
     # aptamer failure is NOT inherited — no records exist for this key.
     assert a.ranking_dims == objectives
     assert a.kept_flags == {"rhofold_component": "unprofiled"}

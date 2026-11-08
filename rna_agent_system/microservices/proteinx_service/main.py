@@ -130,8 +130,7 @@ class ProtenixPredictResponse(BaseModel):
     and must NOT be fed directly to EGARPS (its CIF reader rejects OP3, and
     the EGARPS pipeline overwrites non-.pdb inputs with its pickle caches)
     or to PDB-only parsers. Convert with gemmi into a sanitized .pdb copy
-    first — see experiments/run_known_aptamer_validation.py::
-    _proteinx_cif_to_pdb.
+    first (gemmi-based CIF→PDB conversion with OP3 residue stripping).
     """
 
     pdb_filepath: str = ""

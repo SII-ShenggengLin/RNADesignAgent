@@ -33,7 +33,7 @@ from agent_core.workflows.evaluators import (
 
 _LOGGER = logging.getLogger("agent_core.workflows.sgrna_design")
 
-# Ranking governance (DECISIONS (p)): oracle-backed objectives.
+# Ranking governance : oracle-backed objectives.
 # ``crisot_specificity_component`` comes from the aggregate CRISOT
 # specificity service (ToolKind.compute), so it never enters the mechanism.
 _ORACLE_BACKED_OBJECTIVES: dict[str, ObjectiveRef] = {
@@ -485,8 +485,8 @@ class SgRnaDesignWorkflow(BaseDomainWorkflow[SgRnaDesignInput, WorkflowResult]):
                 float(getattr(inp, "weight_crisot_specificity", 0.3)) if inp else 0.3
             ),
         }
-        # Ranking governance (DECISIONS (p)): nn/crisot are pending-governance
-        # oracles (registered data gap, DECISIONS (l)) — kept with a
+        # Ranking governance : nn/crisot are pending-governance
+        # oracles (registered data gap,) — kept with a
         # ``pending`` flag; crisot_specificity is aggregate compute, never in
         # the mechanism. The shared layer renormalizes asf_weights over the
         # surviving ranking dims.

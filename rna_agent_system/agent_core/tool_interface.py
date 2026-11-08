@@ -32,7 +32,7 @@ class ToolStatus(str, Enum):
 class ToolKind(str, Enum):
     """Intrinsic nature of a tool — the platform's governance taxonomy.
 
-    Boundary decision (2026-08-18, docs/DECISIONS.md): learned predictors of
+    Boundary decision (2026-08-18): learned predictors of
     biological outcomes whose scores are consumed as candidate-quality
     evidence are ``predictor`` and carry an ``OracleDescriptor``; thermodynamic
     and algorithmic structure computation (ViennaRNA, LinearFold, BLAST, CAI,
@@ -91,7 +91,7 @@ class OracleDescriptor(BaseModel):
             "descriptor currently pins. Compared against the profiling-time "
             "oracle_version stamped on SelfModel records: a mismatch means the "
             "grades describe a different artifact than the one declared "
-            "(warn + audit, never block; DECISIONS (w))."
+      "(warn + audit, never block;)."
         ),
     )
 

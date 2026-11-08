@@ -174,7 +174,7 @@ def write_manifest(path: str | Path) -> Path:
 if __name__ == "__main__":
     import sys
 
-    target = sys.argv[1] if len(sys.argv) > 1 else _PROJECT_ROOT / "experiments" / "results" / "tool_inventory.json"
+    target = sys.argv[1] if len(sys.argv) > 1 else _PROJECT_ROOT / "workspace" / "tool_inventory.json"
     out = write_manifest(target)
     summary = build_inventory()["summary"]
     print(json.dumps(summary, indent=2))

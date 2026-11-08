@@ -341,7 +341,7 @@ def test_quality_agent_builds_full_length_context():
 
     # Best candidate breakdown should exist since we have candidates. The
     # stub MRL oracle ties every 5'UTR at 5.0, so the benchmark-first
-    # tie-break (DECISIONS (bb)) can legitimately win the best slot.
+    # tie-break can legitimately win the best slot.
     best_breakdown = ctx.get("best_candidate_breakdown")
     assert best_breakdown is not None
     assert best_breakdown.get("utr5_preset") in {"short", "benchmark"}

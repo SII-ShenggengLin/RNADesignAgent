@@ -1,4 +1,4 @@
-"""Oracle version-drift stamps (DECISIONS (w)) — pure-additive hardening.
+"""Oracle version-drift stamps — pure-additive hardening.
 
 Pins the 2026-08-22 version-stamp contract:
 
@@ -10,7 +10,7 @@ Pins the 2026-08-22 version-stamp contract:
   on drift — and the drift never changes a gate verdict or blocks a call
   (semantics unchanged; informational only);
 - the audit event type is registered in the ``AuditEvent`` Literal (an
-  unregistered type is silently dropped — the DECISIONS (s) defect class).
+  unregistered type is silently dropped — the defect class).
 """
 
 from __future__ import annotations
@@ -43,7 +43,7 @@ def test_every_managed_oracle_descriptor_declares_a_version():
     for descriptor in oracle_specs:
         assert descriptor.oracle_version, (
             f"{descriptor.oracle_id} declares no oracle_version — every managed "
-            "oracle must pin the deployed artifact version (DECISIONS (w))"
+            "oracle must pin the deployed artifact version "
         )
     assert ORACLE_VERSIONS == {
         d.oracle_id: d.oracle_version for d in oracle_specs
@@ -155,6 +155,6 @@ def test_drift_never_changes_gate_verdicts(tmp_path):
 
 def test_mismatch_event_type_is_registered():
     # An unregistered Literal would raise here and be silently swallowed by
-    # the best-effort writer (the DECISIONS (s) defect class).
+    # the best-effort writer (the defect class).
     event = AuditEvent(event_type="oracle_version_mismatch", payload={"oracle": "x"})
     assert event.event_type == "oracle_version_mismatch"

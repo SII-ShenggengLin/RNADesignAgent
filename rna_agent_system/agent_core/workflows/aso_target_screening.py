@@ -545,7 +545,7 @@ class AsoTargetScreeningWorkflow(
         Accessibility is the mean unpaired probability [0, 1].
         Binding is the negative thermodynamic ΔG (more negative = stronger binding).
         Missing measurements are ``None`` (never 0.0) so the shared ASF layer
-        imputes them at the measured pool-worst value (DECISIONS (o) policy —
+        imputes them at the measured pool-worst value (the registered policy —
         evaluation failure must not be rewarded).
         """
         mean_unpaired = metrics.get("mean_unpaired_prob")

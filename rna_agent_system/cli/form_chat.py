@@ -32,6 +32,37 @@ import resource_checker  # noqa: E402
 import service_orchestrator  # noqa: E402
 
 
+_PATH_KEY_SUFFIXES = ("_path", "_filepath", "_file", "path", "filepath")
+_PATH_VALUE_SUFFIXES = (
+    ".fa", ".fasta", ".pdb", ".cif", ".json", ".csv", ".txt", ".yaml", ".yml",
+)
+
+
+def anchor_repo_relative_paths(params: dict[str, Any], root: Path) -> dict[str, Any]:
+    """Resolve repo-relative file parameters against ``root`` (the project root).
+
+    Benchmark parameter files reference input files relative to the project
+    root (e.g. ``data/benchmarks/.../x.fa``). Anchoring them here lets the
+    same files work from any working directory. Absolute paths and plain
+    strings that do not look like existing files under ``root`` pass through
+    unchanged.
+    """
+    for key, value in list(params.items()):
+        if not isinstance(value, str) or not value:
+            continue
+        key_matches = any(key.endswith(sfx) for sfx in _PATH_KEY_SUFFIXES)
+        value_matches = value.lower().endswith(_PATH_VALUE_SUFFIXES)
+        if not (key_matches or value_matches):
+            continue
+        candidate = Path(value)
+        if candidate.is_absolute():
+            continue
+        anchored = root / candidate
+        if anchored.exists():
+            params[key] = str(anchored)
+    return params
+
+
 _WORKFLOW_LIST: list[tuple[str, str, str]] = [
     ("1", "mrna_cds_design", "mRNA CDS 设计"),
     ("2", "full_length_mrna_design", "全长 mRNA 设计"),
@@ -512,6 +543,8 @@ def main() -> int:
     if args.params_file:
         with open(args.params_file, "r", encoding="utf-8") as f:
             form_params = json.load(f)
+        if isinstance(form_params, dict):
+            form_params = anchor_repo_relative_paths(form_params, APP_ROOT)
         print(f"\n[Params] 已从 {args.params_file} 加载参数")
         ok = _run_once(runner, session_id, selected_workflows[0], form_params=form_params, save_file=True)
         return 0 if ok else 1

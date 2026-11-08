@@ -1,11 +1,11 @@
 """Literature-grounded UTR admission rules and the benchmark UTR pool for
-full-length mRNA design (DECISIONS (bb), 2026-09-07 wet-lab-preparation
+full-length mRNA design (, 2026-09-07 wet-lab-preparation
 redesign).
 
 Every rule below carries an explicit, citable literature threshold. Rules
 proposed during the design review that have NO established quantitative
 threshold in the literature were deliberately not implemented (registered in
-DECISIONS (bb)):
+):
 
 * overall U-content caps and GU-rich TLR7/8 motif counts — Vaidyanathan et
   al. 2018 (Mol Ther Nucleic Acids 10:61) reduced global U content 15.5% ->
@@ -69,12 +69,12 @@ _LOGGER = logging.getLogger("agent_core.generation.utr_pool")
 
 # ── GEMORNA screening-scale draw counts (GEMORNA Science 2025 evaluated 12
 # designed 5'UTRs and 10 designed 3'UTRs per target before full-length
-# assembly; DECISIONS (bb) matches that scale) ──────────────────────────────
+# assembly; matches that scale) ──────────────────────────────
 GEMORNA_5UTR_DRAWS_PER_PRESET: int = 4          # x {short, medium, long} = 12
 GEMORNA_3UTR_DRAWS_PER_PRESET: dict[str, int] = {"short": 4, "medium": 3, "long": 3}   # = 10
 
 # Shortlist caps for the assembled-combination stage (compute cap, not a
-# ranking; DECISIONS (bb)). The 5'UTR shortlist is ordered by the certified
+# ranking;). The 5'UTR shortlist is ordered by the certified
 # MRL oracle; the 3'UTR shortlist is admission-survival order (benchmarks
 # first, then GEMORNA generation order) — utr3 ranking is not oracle-driven.
 UTR5_SHORTLIST_MAX: int = 6
@@ -197,7 +197,7 @@ def check_scanning_path(full_seq: str, cds_start: int, fold_mfe: FoldMfe) -> dic
                        "worst_mfe": round(worst_mfe, 3), "threshold": KOZAK_STALL_MFE_MAX}}
 
 
-# ── Benchmark asset (assertion-first, docs/ANCHORS.md pattern) ─────────────
+# ── Benchmark asset (assertion-first curation pattern) ─────────────────────
 
 _BENCHMARK_CACHE: Optional[list[dict[str, Any]]] = None
 

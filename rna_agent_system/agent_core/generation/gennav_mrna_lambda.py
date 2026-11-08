@@ -7,10 +7,11 @@ lattice probe, Laplace pass-rate priors, band-gap-first mechanized
 reinforcement, cycling guaranteed-repair allocation, matrix delivery),
 transferred to the LinearDesign λ gear axis whose feasibility curve was
 validated mRNA-side by E6 (S2 primary endpoint GO, paired McNemar
-p = 1.86e-09, 30:0 discordant; evidence ``experiments/results/e6_*``).
+p = 1.86e-09, 30:0 discordant; evidence recorded in the internal
+experiment archive).
 
 Domain mapping (documented production defaults, NOT E6 campaign numbers —
-the E6 U-score machinery was deleted per DECISIONS.md (n)):
+the E6 U-score machinery was deleted in the 2026-08 system simplification):
 
 - gear axis: LinearDesign λ. The probe lattice is E6's λ-curve
   {0, 1, 2, 4, 8, 10, 20, 50}; LinearDesign is deterministic per λ, so

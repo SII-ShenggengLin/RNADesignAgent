@@ -3,7 +3,7 @@
 Covers:
 1. score_full_length_mrna_candidate unit scoring
 2. FullLengthMrnaDesignInput Pydantic validation
-3. Two-step generation logic (DECISIONS (bb)): CDS selection ≤3 + UTR pool
+3. Two-step generation logic : CDS selection ≤3 + UTR pool
    (GEMORNA screening-scale draws + benchmark UTRs + admission gates + Kozak
    gates) with mocked capabilities
 4. Workflow integration with mocked capabilities
@@ -153,7 +153,7 @@ def test_input_dict_coercion():
 
 
 def _make_registry_with_mocks() -> MagicMock:
-    """Mock registry for the two-step design (DECISIONS (bb)).
+    """Mock registry for the two-step design .
 
     Every GEMORNA UTR draw returns a unique, passable sequence per (side,
     preset, draw index); MRL is derived from the sequence (G count) so the
@@ -244,7 +244,7 @@ def _make_registry_with_mocks() -> MagicMock:
 
 
 def test_generate_candidates_two_step_static_counts():
-    """Two-step design (DECISIONS (bb)), static recipe path (navigation=False).
+    """Two-step design, static recipe path (navigation=False).
 
     3 unique CDS selected (top-3 of the static pool) × 5'UTR shortlist
     (6 = 3 benchmarks + 3 best GEMORNA by MRL) × 3'UTR shortlist (6 = 2
@@ -290,7 +290,7 @@ def test_generate_candidates_two_step_static_counts():
 
 def test_generate_candidates_pool_built_once_not_resampled_per_cds():
     """The UTR pool is drawn once per run — the same UTR ids appear under every
-    selected CDS (no resampling confound; DECISIONS (bb))."""
+    selected CDS (no resampling confound;)."""
     reg = _make_registry_with_mocks()
     wf = FullLengthMrnaDesignWorkflow(reg)
     inp = FullLengthMrnaDesignInput(
@@ -824,7 +824,7 @@ def test_reference_point_validation():
 
 
 def test_reference_point_rejects_utr3_stability_loudly():
-    """DECISIONS (bb): utr3_stability is demoted to a report-only diagnostic —
+    """: utr3_stability is demoted to a report-only diagnostic —
     a user reference point naming it fails loudly with the demotion reason."""
     with pytest.raises(ValueError, match="utr3_stability.*demoted"):
         FullLengthMrnaDesignInput(
@@ -951,7 +951,7 @@ def _make_nav_registry():
 
 def test_full_length_default_recipe_delegates_to_navigation():
     """v2.0.0: unset navigation + the default 'all' recipe runs GenNav-λ in
-    the CDS sub-workflow; DECISIONS (bb): step-1 then selects ≤3 delivered CDS
+    the CDS sub-workflow; : step-1 then selects ≤3 delivered CDS
     (one per navigation profile); the navigation trace lands in the merged
     full-length state writeback; candidates carry the gennav source."""
     caps, reg = _make_nav_registry()

@@ -748,8 +748,8 @@ class MrnaCdsDesignWorkflow(BaseDomainWorkflow[MrnaCdsDesignInput, WorkflowResul
         #    protein length (~7.5 GB at 500 aa), so big proteins probe with
         #    reduced workers (thread count affects scheduling only — the
         #    integration order stays fixed and the pool is identical).
-        #    AMENDMENT (2026-09-06, user-directed utilization pass, DECISIONS
-        #    (aa) era): big-protein probe workers 2 → 4 — the 2-worker cap
+        # AMENDMENT (2026-09-06, user-directed utilization pass): big-protein
+        #    probe workers 2 → 4 — the 2-worker cap
         #    was calibrated on the smaller-memory machine era; on the current
         #    1 TB host, 4 × ~47 GB (~1,200 aa worst case) = ~190 GB per
         #    navigation run with several runs concurrent is well inside

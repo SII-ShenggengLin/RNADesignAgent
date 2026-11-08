@@ -40,7 +40,7 @@ from agent_core.calibrated.self_model import SelfModel
 _LOGGER = logging.getLogger(__name__)
 
 # Directory holding the packaged default SelfModel built from the E1/E7/RNAsmol
-# profiling campaigns (generator: experiments/build_default_self_model.py).
+# profiling campaigns (the generator ships in the Zenodo data deposit).
 _PACKAGE_DIR = Path(__file__).resolve().parent
 DEFAULT_SELF_MODEL_PATH = _PACKAGE_DIR / "default_self_model.json"
 
@@ -92,7 +92,7 @@ ORACLE_GOVERNANCE: dict[str, str] = _oracle_tables_from_specs()[1]
 # Oracle id -> the artifact version currently declared by the ToolSpec oracle
 # descriptor (None when undeclared).  Compared at runtime configuration against
 # the profiling-time oracle_version stamped on SelfModel records; a mismatch
-# warns and audits but never blocks (DECISIONS (w)).
+# warns and audits but never blocks.
 ORACLE_VERSIONS: dict[str, Optional[str]] = {
     spec.oracle.oracle_id: spec.oracle.oracle_version
     for spec in _iter_oracle_specs()
@@ -231,7 +231,7 @@ class CalibratedRuntime:
     def oracle_version_drift(self) -> list[dict[str, str]]:
         """Descriptor-vs-record version drift for stamped managed oracles.
 
-        Pure-additive drift detection (DECISIONS (w)): compares the
+    Pure-additive drift detection : compares the
         ``oracle_version`` declared by each ToolSpec oracle descriptor against
         the profiling-time ``oracle_version`` stamped on this SelfModel's
         records for the same oracle.  A mismatch means the packaged grades

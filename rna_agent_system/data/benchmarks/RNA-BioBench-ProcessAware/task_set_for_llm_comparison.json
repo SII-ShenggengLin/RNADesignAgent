@@ -1638,7 +1638,7 @@
       "task_class": "prediction",
       "user_query": "我有一段来自病毒载体的 5'UTR 序列，想检测其中是否存在潜在的 IRES 元件，用于评估它能否介导非帽依赖的翻译起始。请使用 IRESfinder 的滑动窗口模式（mode 2）进行扫描，窗口大小 174 nt、步长 50 nt，概率阈值 0.5，并对候选区域做结构验证（LinearFold/ViennaRNA 折叠 + dot-bracket 未配对分数 + RNAplfold 局部可及性）。请输出排名前 5 的候选区域位置、IRES 概率、MFE、未配对分数以及置信度评级。\\n\\n5'UTR 序列是：\"CGCUUGGCACUAAGGGGCUGCAGACGAGAUGCGUCGGUCUAUAUUAACUAUACGGAUAACGCCCAGGAAGCACGCUAAUUCGCAUUCAAAGGCGCACGCGAGCAGAGCGCGCUCAUGGGAUCAUAAUGGGGAAGAUGAAGUUGGCAUCAGAAGUUAGUUCCCCCUUGUAUACAUCUACCACUUGUGCACGUGGUCUACGUGACAAACUGGACACACACACGGGGAUGGCAUACGGGGGACUAAGUCUACCGGUCUCGAGGACUGUAUGACCUUCAAAUGGAGGGGCACGAACAUUAAUCAAUUGGCAACGAAUCCGGCCGGUUAUUACGACAUGAACGCCAUCACUUACCCUCCUAACGCAAAGAUCAGUAGGAAGUUCGUCACCUUGACUCUUCUCUCUCCAUCGACAACCGAAGUGAAUCAUUCGCAUUCACACAGCUCAAUUUCCAAUGGAUUACGAUCAUGUCCGAAUGGUAGUGCGGGUUAGCCAACGUGCCGAAUCUACAAAGACUCUACAAAAAUAUACCAAGCAGGAUAUUGUCUACGUGUUAUUUCUGACAAAUUGGGUAUGGUUCCGUCCGUGCAAUCAGCGCCUGCCUUGAAUCCGGUCAAAGUGGAGUGGUCGUGUGGGGAGGUGCGGAAACUCGCUGUUACUGCCACUGGAGCAACUACAGAUAUAGCGCCCGCACGUGUGGAUAAACGCAAUAUACAGAGGUCUAUUUUAAGUUCGACCGUACGAGAGCCCAUAGGGAACACCCAGCCACAGCAGCGGGCGAGCACUUGUGGUUAAACGGCUAUUG\"",
       "structured_input": {
-        "sequence_filepath": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
+        "sequence_filepath": "data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr_long.fa",
         "iresfinder_mode": 2,
         "probability_threshold": 0.5,
         "window_size": 174,
@@ -3135,7 +3135,7 @@
       "task_class": "prediction",
       "user_query": "我有一段合成的人源肿瘤抑制基因候选 mRNA 的 5'UTR 序列（400 nt），用于基因治疗中的帽非依赖翻译起始评估。请使用 IRESfinder 的全序列模式（mode 0），概率阈值 0.5，并对候选区域做结构验证（LinearFold/ViennaRNA 折叠 + dot-bracket 未配对分数 + RNAplfold 局部可及性），评估该 5'UTR 是否存在 IRES 活性。请输出整体 IRES 概率、最佳候选片段、MFE、未配对分数、局部可及性以及置信度评级。\n\n5'UTR 序列是：\"AGCGAAUGCGGAGGAAGAUGUACGUCGGUAUAAUCAUAUAAGGCGGGCACCGCUAAGAGCUAAAUUGGCCGUUCACUCCCACAUCGUAGGGAUCGCUAUUGAAACAGCCUUCAGUUCAAGUAUAGCGUUUCGUUGAGUUGCACUCGAAGCUACAGGCAGGGAGUUGGAGGUACUUGGCCCAAUGCCUCGCCCCUCUAGUUUUUGAGCGCUCUCCUUAAGCUAAUGAAUGUGGAAGGUCAACAAUGAGCACCUGCUUGGCUUUCGUAAUAGUCAUGGGACAAGACAUUGCCGUACUACGGUUAUAGGCUUUUGCGUUCAGUUUUUGACUUUUCUGUUGUCCUGGGCUUCACUAUGUGUCGCACAACACAGUAAUACGACCUACCCCCGCUAUACAGCCAAC\"",
       "structured_input": {
-        "sequence_filepath": "REDACTED-PATH/data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr.fa",
+        "sequence_filepath": "data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/test_5utr.fa",
         "iresfinder_mode": 0,
         "probability_threshold": 0.5,
         "top_n_candidates": 5,
@@ -3222,7 +3222,7 @@
                 1
               ],
               "sequence_filepath": [
-                "REDACTED-PATH/data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/pa023_mode1_5utr.fa"
+                "data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/pa023_mode1_5utr.fa"
               ],
               "probability_threshold": [
                 0.5

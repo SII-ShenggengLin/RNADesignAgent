@@ -40,11 +40,11 @@ from agent_core.workflows.multi_objective import apply_reference_point_ranking
 
 _LOGGER = logging.getLogger("agent_core.workflows.rna_tertiary_structure_design")
 
-# Ranking governance (DECISIONS (p)): only the RhoFold component is oracle-
+# Ranking governance : only the RhoFold component is oracle-
 # backed; under this workflow's task key the SelfModel holds no records
-# (DECISIONS (k) task-keyed gating), so it stays with an ``unprofiled`` flag
+# (task-keyed gating), so it stays with an ``unprofiled`` flag
 # rather than inheriting the E1 aptamer failure. The closeness dimensions are
-# deterministic geometric compute (DECISIONS (j)).
+# deterministic geometric compute .
 _ORACLE_BACKED_OBJECTIVES: dict[str, ObjectiveRef] = {
     "rhofold_component": ObjectiveRef(
         dim="rhofold_component",
@@ -683,7 +683,7 @@ class RnaTertiaryStructureDesignWorkflow(
             "rmsd_component": float(getattr(inp, "weight_rmsd", 0.5)) if inp else 0.5,
             "tm_component": float(getattr(inp, "weight_tm_score", 0.5)) if inp else 0.5,
         }
-        # Ranking governance (DECISIONS (p)): RhoFold is unprofiled under this
+        # Ranking governance : RhoFold is unprofiled under this
         # task key (kept + flag); the shared layer renormalizes asf_weights
         # over the surviving ranking dims.
         assembly = assemble_for_workflow(list(_OBJECTIVES), _ORACLE_BACKED_OBJECTIVES, self.task_type)

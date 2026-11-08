@@ -1,6 +1,6 @@
 """Ranking governance: assemble ASF objective sets from CapGate verdicts.
 
-Implements ``docs/RANKING_GOVERNANCE.md`` (DECISIONS (p), 2026-08-21): the
+Implements the ranking-governance design (2026-08-21): the
 shared ASF ranking layer consumes the DecisionGate verdict as a first-class
 input. A dimension backed by an oracle without verified (or
 transferred-verified) ranking power is demoted to ``scoring_annotation`` —
@@ -26,7 +26,7 @@ assembly and tool-call gating can never disagree about a record):
   enforce-governed without records                          → keep + ``unprofiled``
   (no verdict exists; demoting would punish without evidence. Known
   divergence: enforce-mode tool-call blocking still drops the dimension at
-  measurement time — RANKING_GOVERNANCE.md §8.2.)
+  measurement time.)
 
 Deterministic; no LLM. The ``RNADA_CAPGATE=off`` escape hatch disables the
 whole mechanism (all-keep, no state flags).
@@ -46,7 +46,7 @@ from agent_core.calibrated.runtime import (
 )
 from agent_core.calibrated.self_model import SelfModel
 
-# Dims without a ref (deterministic compute per the DECISIONS (j) ontology)
+# Dims without a ref (deterministic compute per the ontology)
 # never enter the mechanism; they are always kept.
 
 
@@ -67,7 +67,7 @@ class AssembledObjectives:
     a demoted dim to the DecisionGate's verdict reason (human-readable
     annotation for the state writeback). ``degrade_reason`` is set iff no
     dimension survives — the workflow must then deliver the
-    ``ranking_evidence_unavailable`` degrade (RANKING_GOVERNANCE.md §3.6).
+    ``ranking_evidence_unavailable`` degrade.
     """
 
     ranking_dims: list[str] = field(default_factory=list)
@@ -130,11 +130,11 @@ def assemble_ranking_objectives(
     Args:
         objectives: The workflow's ordered objective dimensions.
         refs: Oracle-backed dims only, keyed by dimension. Dims absent from
-            ``refs`` are deterministic compute (DECISIONS (j)) and always kept.
+      ``refs`` are deterministic compute and always kept.
         self_model: The SelfModel to query (conservative default-family
             transfer semantics apply).
         task_type: The calling workflow's task type (never the oracle's
-            registered default; DECISIONS (k)).
+      registered default;).
         target_family: Defaults to ``"default"`` — deliberately, so the
             SelfModel's worst-grade-across-families transfer (anti-cherry-
             pick rule) adjudicates.
@@ -222,7 +222,7 @@ def screening_filter_demoted(
     """True when the tool's ``screening_evaluation`` verdict is a rejection.
 
     Used by in-pipeline filters (e.g. the aptamer light-stage RhoFold pLDDT
-    top-k gate, RANKING_GOVERNANCE.md §3.5): a failed screening profile must
+    top-k gate): a failed screening profile must
     not arbitrate candidate selection — the caller degrades to deterministic
     pool order. Mode-independent; ``False`` when governance is off or the
     tool is not a managed oracle.

@@ -501,8 +501,8 @@ class SirnaDesignWorkflow(BaseDomainWorkflow[SirnaDesignInput, WorkflowResult]):
         for c in passing:
             if c.scores.get("efficiency_component") is None or c.scores.get("specificity_component") is None:
                 c.scores.update(score_sirna_candidate(c.metadata.get("metrics_bundle", {})))
-        # Ranking governance (DECISIONS (p)): no siRNA objective is oracle-
-        # backed (all deterministic compute per DECISIONS (j)), so assembly
+        # Ranking governance : no siRNA objective is oracle-
+        # backed (all deterministic compute per), so assembly
         # always keeps everything — the state field records that fact.
         assembly = assemble_for_workflow(list(_ASF_OBJECTIVES), {}, self.task_type)
         self._workflow_state["_ranking_governance"] = assembly.to_state()

@@ -1,9 +1,9 @@
 # RNA-BioBench: Benchmark Datasets for RNADesignAgent
 
-> **Last updated**: 2026-09-02 (FullLength-mRNA target list corrected to the operative set; paper-section column re-based to FIGURE_PLAN_V5 lettering)
+> **Last updated**: 2026-09-02 (FullLength-mRNA target list corrected to the operative set)
 
-This directory contains all benchmark datasets used in the RNADesignAgent paper experiments.
-For the experiment plan that consumes these datasets, see [`../../docs/MANUSCRIPT.md`](../../docs/MANUSCRIPT.md).
+This directory contains all benchmark datasets used in the RNADesignAgent paper.
+See [`docs/README.md` §8](../../docs/README.md) for how to run a benchmark task through the CLI.
 
 ## Datasets Overview
 
@@ -149,7 +149,7 @@ Each dataset includes a `schema_version` field in its manifest. Current versions
 ### Known legacy naming (registered 2026-09-11)
 
 - `RNA-BioBench-Platform/tasks/04_sirna_design/04_sirna_design_013_blast_identity_70.json`: the task id and `description` predate the platform default and are retained verbatim because the frozen Exp-6 records embed the description byte-for-byte. The bowtie2 score floor `G,10,4` is the platform default (`agent_core/workflows/sirna_design.py`), not a task-specific strict threshold, and "identity-70" is only an analogy with the BLAST `perc_identity` floor. The task's actual edge character is its synthetic target — a verbatim 86-nt fragment of the segmentally duplicated human lncRNA locus DDX11L2/DDX11L16; see the task JSON's `legacy_name_note` field and the Exp-6 frozen records.
-- **PA_023 legacy input path (registered 2026-09-11, restored)**: `pa_benchmarks.json` entry `023` turns 1–2 reference `workspace/pa023_5utr.fa` — an absolute path into the ephemeral workspace root from the pre-reset registration era; the file was never git-tracked (all 291 commits checked) and was absent from the fourth-reset state onward, so the frozen exp8/exp24/exp25 corpora recorded turns 1–2 failing with FileNotFoundError, identically in every arm (the Exp-25 disclosure). The 400-nt sequence is preserved verbatim in the entry's own `constants.UTR5_SEQUENCE` (the turn-3 fixture `pa023_mode1_5utr.fa` is its 100–300 window, header-checked). Canonical copy: `RNA-BioBench-ProcessAware/fixtures/pa023_5utr.fa`; copy it to `workspace/pa023_5utr.fa` before running PA_023. The restoration is re-measured by `experiments/exp25b_pa023_restore_addendum.py` (3/3 turns succeed in all three arms; the frozen corpora are untouched).
+- **PA_023 legacy input path (registered 2026-09-11; repo-relative since the public release)**: `pa_benchmarks.json` entry `023` turns 1–2 originally referenced `workspace/pa023_5utr.fa`, an absolute path into the ephemeral workspace root of the development machine (the file was never git-tracked; the frozen exp8/exp24/exp25 corpora recorded turns 1–2 failing with FileNotFoundError, identically in every arm). Both turns now point directly at the canonical, byte-identical tracked copy `RNA-BioBench-ProcessAware/fixtures/pa023_5utr.fa`, so PA_023 runs out of the box. The 400-nt sequence is also preserved verbatim in the entry's own `constants.UTR5_SEQUENCE` (the turn-3 fixture `pa023_mode1_5utr.fa` is its 100–300 window, header-checked).
 
 ## Citation
 

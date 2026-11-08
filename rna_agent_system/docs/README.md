@@ -1,8 +1,7 @@
 # RNA Design Multi-Agent System
 
-> **Project root**: `rna_agent_system/`  
-> **Readers**: human developers / AI agents  
-> **Last updated**: 2026-08-22 (repo-wide simplification pass)
+> **Project root**: `rna_agent_system/`
+> **Audience**: users who want to run, extend or reproduce RNADesignAgent
 
 ---
 
@@ -212,9 +211,51 @@ For workflow deep-dives, see [`WORKFLOWS.md`](WORKFLOWS.md).
 | [`README.md`](README.md) | This file — project overview and quick start |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Seven-layer architecture, core module APIs, design principles |
 | [`WORKFLOWS.md`](WORKFLOWS.md) | All domain workflows: pipelines, scoring formulas, critic design |
-| [`MANUSCRIPT.md`](MANUSCRIPT.md) | Experiment manual: benchmark/anchor assets, pilot-first protocol, data availability |
 | [`TOOLS.md`](TOOLS.md) | Per-tool specs, port registry, microservice deployment notes |
 | [`DEPLOYMENT.md`](DEPLOYMENT.md) | Environment setup, testing recipes, curl examples |
-| [`CHANGELOG.md`](CHANGELOG.md) | Current interface state + condensed change-era register |
-| [`DECISIONS.md`](DECISIONS.md) | Do-not-repeat register, established results, timeline |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Coding standards, new-tool procedure, commit conventions |
+| [`tools/`](tools/) | Deep-dive notes for individual tools |
+
+---
+
+## 8. Benchmarks and Reproducing the Paper
+
+The benchmark datasets used in the paper ship with the repository under
+[`data/benchmarks/`](../data/benchmarks/README.md):
+
+- **RNA-BioBench-Platform** — 210 single-turn tasks across the 11 workflows (`*_input.json` files; feed one to `--params-file`)
+- **RNA-BioBench-ProcessAware** — 31 multi-session process-aware regressions through the user form (`pa_benchmarks.json` + `run_pa_test.py`)
+- **RNA-BioBench-FullLength-mRNA / -Aptamer / -Aptamer-Expanded** — target sets for the full-length mRNA and aptamer design campaigns
+- **external_anchors** — curated reference sets (PDB structures, IRES sequences, Kd anchors) with per-set provenance in `SOURCES.md`
+
+The frozen, final-form versions of these datasets (plus the packaged
+capability map and the per-experiment model-usage register) are deposited at
+Zenodo under DOI 10.5281/zenodo.22736194.
+
+Each Platform task JSON carries its form parameters under the `input` key
+(file references are relative to the project root and are resolved
+automatically). To reproduce one, extract the input object and run it through
+the non-interactive CLI, from `rna_agent_system/`:
+
+```bash
+python -c "import json; print(json.dumps(json.load(open(
+  'data/benchmarks/RNA-BioBench-Platform/tasks/11_ires_prediction/11_ires_prediction_001_basic.json'
+))['input']))" > /tmp/task.json
+
+PYTHONPATH="$(pwd):$PYTHONPATH" python cli/form_chat.py \
+  --workflow ires_prediction \
+  --params-file /tmp/task.json
+```
+
+The 31 process-aware sessions are driven by `run_pa_test.py` (see
+`pa_benchmarks.json`), one benchmark number at a time:
+
+```bash
+python run_pa_test.py 006
+```
+
+---
+
+## 9. Citation and License
+
+If you use RNADesignAgent in your work, please cite the accompanying paper.
+The code is released under the license in the repository root `LICENSE`.

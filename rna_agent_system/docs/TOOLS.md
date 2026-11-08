@@ -116,7 +116,7 @@
 - Run `cd external_repos/LinearDesign && make` to generate `bin/LinearDesign_2D.real`, then restore the memory-guard wrapper as `bin/LinearDesign_2D` (the wrapper caps the address space via `ulimit -v`, default 100 GiB, override with `LINEARDESIGN_MAX_RSS_KB`). Never expose the raw binary as `bin/LinearDesign_2D`: unbounded runs previously exhausted the 200 GiB container cgroup and the OOM killer SIGKILLed unrelated processes (2026-08-06).
 - The service also rejects oversized proteins up front (`LINEARDESIGN_MAX_AA`, default 1800 aa; DP-lattice memory grows ~quadratically, ~7.5 GiB at 500 aa) so over-budget jobs fail fast instead of burning memory until the wrapper cap aborts them.
 - `LINEARDESIGN_ROOT` env var can override the directory.
-- Removed 2026-08-18: `design_mrna_cds_batch_with_lineardesign`, `design_mrna_cds_junction_aware_with_lineardesign` (P2 pre-registered NO-GO — the junction-aware objective never repaired fragment-fold burial; `experiments/results/junction_integrated_optimizer_summary.json`) and `shuffle_cds_junction_codons` (junction auto-repair strategy falsified, DECISIONS.md (b)).
+- Removed 2026-08-18: `design_mrna_cds_batch_with_lineardesign`, `design_mrna_cds_junction_aware_with_lineardesign` (pre-registered NO-GO — the junction-aware objective never repaired fragment-fold burial) and `shuffle_cds_junction_codons` (junction auto-repair strategy falsified).
 
 ### 3.2 RNARL (Port 8008)
 
@@ -365,7 +365,7 @@
 
 (9.3 codonw-slim and 9.4 junction codon shuffler removed 2026-08-18 together
 with their tools — no production consumer; junction auto-repair strategy
-falsified, DECISIONS.md (b).)
+falsified).
 
 ---
 

@@ -14,6 +14,17 @@ cd rna_agent_system
 pip install -r requirements.txt
 ```
 
+Optional LLM configuration: the two advisory LLM steps (quality review and
+report synthesis) call the DeepSeek API. To enable them, copy the template
+and add your own key:
+
+```bash
+cp .env.example .env   # then edit .env
+```
+
+Without a key the system still runs end to end; the two advisory steps take
+their deterministic fail-safe paths.
+
 ### 1.3 Per-tool Conda environments
 
 Each microservice has its own Conda `environment.yml`; create and activate it before running `start.sh`.
@@ -123,7 +134,7 @@ The CLI lists all 11 workflows. The user selects by number; multi-select is supp
 `cli/service_orchestrator.py` derives the union of all microservices required by the selected workflows from each workflow's `required_capabilities` (via `agent_core.services.service_manager.CAPABILITY_SERVICE_MAP`). For each service:
 
 1. **Health probe** — `GET /health`
-2. **Triage if unhealthy** (2026-08-22, DECISIONS (r)):
+2. **Triage if unhealthy** (2026-08-22):
    - port free → **auto-start**: `subprocess.Popen(["bash", "start.sh"], ...)` with `start_new_session=True` (per-port `flock`: concurrent callers start a service exactly once);
    - port listening but `/health` *answers* degraded/HTTP-error → pre-flight **fails with a clear error** (the service is running and broken — e.g. a missing checkpoint; it is never restarted);
    - port listening but `/health` *unresponsive* (starved worker) → wait, then **proceed anyway** (no restart loop);
@@ -255,7 +266,7 @@ curl -sS -X POST http://127.0.0.1:8019/blastn \
 curl -sS http://127.0.0.1:8021/health | python3 -m json.tool
 curl -sS -X POST http://127.0.0.1:8021/design/from-pdb \
   -H 'Content-Type: application/json' \
-  -d '{"pdb_path":"REDACTED-PATH/external_repos/RiboDiffusion/example/R1107.pdb","n_samples":1,"sampling_steps":50}' | python3 -m json.tool
+  -d '{"pdb_path":"external_repos/RiboDiffusion/example/R1107.pdb","n_samples":1,"sampling_steps":50}' | python3 -m json.tool
 ```
 
 ---

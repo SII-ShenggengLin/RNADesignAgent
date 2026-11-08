@@ -1,7 +1,7 @@
 {
  "version": "1.0.0",
  "curated": "2026-09-07",
- "decision": "DECISIONS (bb) - wet-lab-preparation UTR benchmark pool, assertion-first curation per docs/ANCHORS.md",
+ "decision": "wet-lab-preparation UTR benchmark pool, assertion-first curation",
  "purpose": "Clinical/published UTR references admitted to every full-length mRNA design pool. Sequences were extracted programmatically from the cited primary sources (zero manual transcription); each entry is verified at load time (length, md5, ACGU purity, and passage of the U1/U2 admission rules of agent_core.generation.utr_pool).",
  "entries": [
   {

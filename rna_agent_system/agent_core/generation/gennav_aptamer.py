@@ -19,9 +19,9 @@ production form:
   utility order → D1 greedy top-5 (the delivery rule shared by both arms
   of every campaign).
 
-The pre-registered E8–E15 drivers and their cached run data live under
-``experiments/results/`` (verdicts: ``e14_verdict_s2.json`` GO, ``e15``
-boundary).  ``tests/test_gennav_aptamer_core.py`` pins this module's
+The pre-registered E8–E15 campaign verdicts (E14 primary endpoint GO,
+``e14_verdict_s2.json``; E15 boundary) are recorded in the internal
+experiment archive.  ``tests/test_gennav_aptamer_core.py`` pins this module's
 behavioural invariants on synthetic pools built from the E14 constants;
 ``tests/test_rna_aptamer_gennav.py`` pins the workflow wiring.
 
