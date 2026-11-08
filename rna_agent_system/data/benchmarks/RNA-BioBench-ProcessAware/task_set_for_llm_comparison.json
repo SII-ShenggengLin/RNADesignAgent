@@ -1176,7 +1176,7 @@
       "query_type": "explicit_multi_param",
       "expected_workflow": "rna_aptamer_design",
       "task_class": "design",
-      "user_query": "我想设计一个 RNA aptamer，能够特异性结合 SARS-CoV-2 的 Nucleocapsid（N）蛋白，用于病毒检测或抑制研究。请使用 PDB 6M3M 的 chain A 结构作为靶点，aptamer 长度设为 35 nt，让系统自动识别结合热点，生成 5 条候选序列。评分时以参考点 (egarps_component=0.5, rhofold_component=0.5, iptm_component=0.5) 进行 ASF 多目标优化，平衡结合亲和力、RNA 自身折叠能力与复合物置信度。请输出排名前 3 的候选序列、对应的 RhoFold pLDDT、EGARPS native probability、ProteinX ipTM、interface contacts、buried SASA、氢键/盐桥数量以及ASF 距离。",
+      "user_query": "我想设计一个 RNA aptamer，能够特异性结合 SARS-CoV-2 的 Nucleocapsid（N）蛋白，用于病毒检测或抑制研究。请使用 PDB 6M3M 的 chain A 结构作为靶点，aptamer 长度设为 35 nt，让系统自动识别结合热点，生成 5 条候选序列。评分时以参考点 (egarps_component=0.5, rhofold_component=0.5, iptm_component=0.5) 进行 ASF 多目标优化，平衡结合亲和力、RNA 自身折叠能力与复合物置信度。请输出排名前 3 的候选序列、对应的 RhoFold pLDDT、EGARPS native probability、Protenix ipTM、interface contacts、buried SASA、氢键/盐桥数量以及ASF 距离。",
       "structured_input": {
         "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/6m3m.pdb",
         "chain_id": "A",
@@ -1235,7 +1235,7 @@
           "Protein structure is resolved from PDB 6M3M chain A",
           "Binding hotspots are identified automatically",
           "ODesign generates aptamer candidates of the requested length",
-          "Each candidate is evaluated with RhoFold, EGARPS, ProteinX, and interface analysis",
+          "Each candidate is evaluated with RhoFold, EGARPS, Protenix, and interface analysis",
           "BMC Type-II coordinator diagnoses inter-module conflicts and performs bounded iteration",
           "Critic is triggered and records a diagnosis"
         ],
@@ -1249,7 +1249,7 @@
           "Side-by-side comparisons across affinity settings, aptamer lengths, and target-input modes are provided"
         ]
       },
-      "follow_up_query": "第一轮结果不错，但我想进一步优化结合亲和力。请保持 35 nt 长度和 6M3M chain A 靶点，把参考点调整为更偏重结合亲和力（egarps_component=0.8, rhofold_component=0.2, iptm_component=0.5），并把 ODesign 采样数从 5 增加到 10 以覆盖更多序列空间。请重新生成候选并与第一轮默认参考点（egarps_component=0.5, rhofold_component=0.5, iptm_component=0.5，5 个样本）的结果对比 RhoFold pLDDT、EGARPS native probability、ProteinX ipTM、interface contacts、buried SASA 以及ASF 距离，解释参考点偏向对结果的影响。",
+      "follow_up_query": "第一轮结果不错，但我想进一步优化结合亲和力。请保持 35 nt 长度和 6M3M chain A 靶点，把参考点调整为更偏重结合亲和力（egarps_component=0.8, rhofold_component=0.2, iptm_component=0.5），并把 ODesign 采样数从 5 增加到 10 以覆盖更多序列空间。请重新生成候选并与第一轮默认参考点（egarps_component=0.5, rhofold_component=0.5, iptm_component=0.5，5 个样本）的结果对比 RhoFold pLDDT、EGARPS native probability、Protenix ipTM、interface contacts、buried SASA 以及ASF 距离，解释参考点偏向对结果的影响。",
       "follow_up_expected_behavior": {
         "intent": "re-design the Nucleocapsid aptamer with higher binding-affinity weight and increased sampling, then compare with the default-weight baseline",
         "parameter_changes": {
@@ -1269,7 +1269,7 @@
         "requires_comparison": true,
         "expected_outputs": [
           "new 35 nt aptamer candidates with reference_point={'egarps_component': 0.8, 'rhofold_component': 0.2, 'iptm_component': 0.5}, and 10 samples",
-          "RhoFold pLDDT, EGARPS native probability, ProteinX ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
+          "RhoFold pLDDT, EGARPS native probability, Protenix ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
           "side-by-side comparison with the round-1 default-weight baseline",
           "interpretation of how increasing binding reference point and sampling affects aptamer ranking"
         ]
@@ -1277,7 +1277,7 @@
       "additional_follow_up_queries": [
         {
           "round": 3,
-          "query": "第二轮的高亲和力候选序列表现不错，但 35 nt 对化学合成来说偏长。为了降低合成成本并提高临床转化可行性，请把 aptamer 长度缩短到 25 nt，保持参考点 egarps_component=0.8、rhofold_component=0.2、iptm_component=0.5 和 10 个样本，针对同一个 6M3M chain A 靶点重新设计。请输出新的候选序列，并与第二轮 35 nt 版本在 RhoFold pLDDT、EGARPS native probability、ProteinX ipTM、interface contacts、buried SASA 以及ASF 距离上做对比，解释缩短长度对结合能力与可合成性的影响。",
+          "query": "第二轮的高亲和力候选序列表现不错，但 35 nt 对化学合成来说偏长。为了降低合成成本并提高临床转化可行性，请把 aptamer 长度缩短到 25 nt，保持参考点 egarps_component=0.8、rhofold_component=0.2、iptm_component=0.5 和 10 个样本，针对同一个 6M3M chain A 靶点重新设计。请输出新的候选序列，并与第二轮 35 nt 版本在 RhoFold pLDDT、EGARPS native probability、Protenix ipTM、interface contacts、buried SASA 以及ASF 距离上做对比，解释缩短长度对结合能力与可合成性的影响。",
           "expected_behavior": {
             "intent": "generate a shorter 25 nt minimal aptamer for synthesis feasibility while keeping high binding reference point, then compare with the 35 nt high-affinity version",
             "parameter_changes": {
@@ -1300,7 +1300,7 @@
             "requires_comparison": true,
             "expected_outputs": [
               "new 25 nt aptamer candidates optimized for binding affinity",
-              "RhoFold pLDDT, EGARPS native probability, ProteinX ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
+              "RhoFold pLDDT, EGARPS native probability, Protenix ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
               "side-by-side comparison of 25 nt vs 35 nt aptamer candidates",
               "interpretation of how aptamer length reduction affects binding confidence and synthesis feasibility"
             ]
@@ -1308,7 +1308,7 @@
         },
         {
           "round": 4,
-          "query": "现在假设我们手头只有 Nucleocapsid 蛋白的序列，没有 PDB 结构。请使用这条序列代替 6M3M PDB，重新设计一个 25 nt 的 aptamer（参考点 egarps_component=0.8, rhofold_component=0.2, iptm_component=0.5，10 个样本）。蛋白序列是：NTASWFTALTQHGKEDLKFPRGQGVPINTNSSPDDQIGYYRRATRRIRMKDLSPRWYFYYLGTGPEAGLPYGANKDGIIWVATEGALNTPKDHIGTRNPANNAAIVLQLPQGTTLPKGFYA。请预测蛋白结构后再进行 aptamer 设计，并将结果与第三轮基于 PDB 结构的设计在 RhoFold pLDDT、EGARPS native probability、ProteinX ipTM 以及 interface contacts 上做对比，讨论只用序列输入时的设计可靠性。",
+          "query": "现在假设我们手头只有 Nucleocapsid 蛋白的序列，没有 PDB 结构。请使用这条序列代替 6M3M PDB，重新设计一个 25 nt 的 aptamer（参考点 egarps_component=0.8, rhofold_component=0.2, iptm_component=0.5，10 个样本）。蛋白序列是：NTASWFTALTQHGKEDLKFPRGQGVPINTNSSPDDQIGYYRRATRRIRMKDLSPRWYFYYLGTGPEAGLPYGANKDGIIWVATEGALNTPKDHIGTRNPANNAAIVLQLPQGTTLPKGFYA。请预测蛋白结构后再进行 aptamer 设计，并将结果与第三轮基于 PDB 结构的设计在 RhoFold pLDDT、EGARPS native probability、Protenix ipTM 以及 interface contacts 上做对比，讨论只用序列输入时的设计可靠性。",
           "expected_behavior": {
             "intent": "perform sequence-only de novo aptamer design by predicting the Nucleocapsid protein structure from sequence, then compare with the structure-guided PDB-based design",
             "parameter_changes": {
@@ -1336,8 +1336,8 @@
             "requires_re_execution": true,
             "requires_comparison": true,
             "expected_outputs": [
-              "new 25 nt aptamer candidates designed from sequence-only input with ProteinX-predicted protein structure",
-              "RhoFold pLDDT, EGARPS native probability, ProteinX ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
+              "new 25 nt aptamer candidates designed from sequence-only input with Protenix-predicted protein structure",
+              "RhoFold pLDDT, EGARPS native probability, Protenix ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
               "side-by-side comparison of sequence-only vs PDB-structure-based designs",
               "interpretation of how target-structure availability affects aptamer design reliability"
             ]
@@ -1347,7 +1347,7 @@
       "evaluation_rubric": {
         "round1": {
           "workflow_correct": "rna_aptamer_design selected explicitly",
-          "tool_chain_complete": "hotspot identification → ODesign JSON → ODesign inference → RNA extraction → GC → RhoFold → EGARPS → ProteinX complex → interface analysis → BMC coordinator → Critic",
+          "tool_chain_complete": "hotspot identification → ODesign JSON → ODesign inference → RNA extraction → GC → RhoFold → EGARPS → Protenix complex → interface analysis → BMC coordinator → Critic",
           "audit_records_present": "JSON + Markdown artifacts generated",
           "max_duration_seconds": 1800
         },
@@ -2715,7 +2715,7 @@
       "query_type": "explicit_multi_param",
       "expected_workflow": "rna_aptamer_design",
       "task_class": "design",
-      "user_query": "我需要设计一个靶向人源 VEGF165 的 RNA aptamer，用于抗肿瘤血管生成的治疗性阻断研究。请使用 PDB 1VPF 的 chain A 结构作为靶点，aptamer 长度设为 30 nt，让系统自动识别结合热点，生成 5 条候选序列。评分时以参考点 (egarps_component=0.5, rhofold_component=0.5, iptm_component=0.5) 进行 ASF 多目标优化，平衡结合亲和力、RNA 自身折叠能力与复合物置信度。请输出排名前 3 的候选序列、对应的 RhoFold pLDDT、EGARPS native probability、ProteinX ipTM、interface contacts、buried SASA、氢键/盐桥数量以及ASF 距离。",
+      "user_query": "我需要设计一个靶向人源 VEGF165 的 RNA aptamer，用于抗肿瘤血管生成的治疗性阻断研究。请使用 PDB 1VPF 的 chain A 结构作为靶点，aptamer 长度设为 30 nt，让系统自动识别结合热点，生成 5 条候选序列。评分时以参考点 (egarps_component=0.5, rhofold_component=0.5, iptm_component=0.5) 进行 ASF 多目标优化，平衡结合亲和力、RNA 自身折叠能力与复合物置信度。请输出排名前 3 的候选序列、对应的 RhoFold pLDDT、EGARPS native probability、Protenix ipTM、interface contacts、buried SASA、氢键/盐桥数量以及ASF 距离。",
       "structured_input": {
         "protein_structure_path": "data/benchmarks/RNA-BioBench-Aptamer/structures/1vpf.pdb",
         "chain_id": "A",
@@ -2770,7 +2770,7 @@
           "Protein structure is resolved from PDB 1VPF chain A",
           "Binding hotspots are identified automatically when hotspot_residues is omitted",
           "ODesign generates aptamer candidates of the requested length",
-          "Each candidate is evaluated with RhoFold, EGARPS, ProteinX, and interface analysis",
+          "Each candidate is evaluated with RhoFold, EGARPS, Protenix, and interface analysis",
           "BMC Type-II coordinator diagnoses inter-module conflicts and performs bounded iteration",
           "Critic is triggered and records a diagnosis"
         ],
@@ -2783,7 +2783,7 @@
           "Side-by-side comparisons across length/weight settings and across auto-vs-explicit hotspot design are provided"
         ]
       },
-      "follow_up_query": "第一轮结果不错，但这个 aptamer 计划用于体内实验，需要提高在血清环境中的结构稳定性。请在保持 VEGF165（1VPF chain A）靶点不变的前提下，将 aptamer 长度从 30 nt 增加到 40 nt，并把参考点调整为更偏重 RNA 自身折叠稳定性（rhofold_component=0.7, egarps_component=0.3, iptm_component=0.5），重新生成 5 条候选。请对比两轮结果在 RhoFold pLDDT、EGARPS native probability、ProteinX ipTM、interface contacts、buried SASA 以及ASF 距离上的差异，并解释提高 foldability 参考点和增加长度如何影响体内稳定性。",
+      "follow_up_query": "第一轮结果不错，但这个 aptamer 计划用于体内实验，需要提高在血清环境中的结构稳定性。请在保持 VEGF165（1VPF chain A）靶点不变的前提下，将 aptamer 长度从 30 nt 增加到 40 nt，并把参考点调整为更偏重 RNA 自身折叠稳定性（rhofold_component=0.7, egarps_component=0.3, iptm_component=0.5），重新生成 5 条候选。请对比两轮结果在 RhoFold pLDDT、EGARPS native probability、Protenix ipTM、interface contacts、buried SASA 以及ASF 距离上的差异，并解释提高 foldability 参考点和增加长度如何影响体内稳定性。",
       "follow_up_expected_behavior": {
         "intent": "re-design the VEGF165 aptamer for improved serum stability by increasing length to 40 nt and biasing scoring toward RhoFold foldability, then compare with the 30 nt balanced-weight baseline",
         "parameter_changes": {
@@ -2806,7 +2806,7 @@
         "requires_comparison": true,
         "expected_outputs": [
           "new 40 nt aptamer candidates with reference_point={'egarps_component': 0.3, 'rhofold_component': 0.7, 'iptm_component': 0.5}",
-          "RhoFold pLDDT, EGARPS native probability, ProteinX ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
+          "RhoFold pLDDT, EGARPS native probability, Protenix ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
           "side-by-side comparison with the round-1 30 nt / 默认参考点 baseline",
           "interpretation of how length increase and foldability reference-point bias affect serum stability and binding confidence"
         ]
@@ -2814,7 +2814,7 @@
       "additional_follow_up_queries": [
         {
           "round": 3,
-          "query": "第二轮的 40 nt 高折叠稳定性候选表现不错。现在我希望能把设计聚焦到 VEGF165 上已知的肝素结合区（heparin-binding domain），请指定热点残基 A/80、A/82、A/84，保持 40 nt 长度和参考点 rhofold_component=0.7、egarps_component=0.3、iptm_component=0.5，把 ODesign 采样数从 5 增加到 15 以探索更多序列空间。请输出新的候选序列，并与第二轮的自动热点设计结果在 RhoFold pLDDT、EGARPS native probability、ProteinX ipTM、interface contacts 以及ASF 距离上做对比，讨论指定热点对靶向特异性和结合模式的影响。",
+          "query": "第二轮的 40 nt 高折叠稳定性候选表现不错。现在我希望能把设计聚焦到 VEGF165 上已知的肝素结合区（heparin-binding domain），请指定热点残基 A/80、A/82、A/84，保持 40 nt 长度和参考点 rhofold_component=0.7、egarps_component=0.3、iptm_component=0.5，把 ODesign 采样数从 5 增加到 15 以探索更多序列空间。请输出新的候选序列，并与第二轮的自动热点设计结果在 RhoFold pLDDT、EGARPS native probability、Protenix ipTM、interface contacts 以及ASF 距离上做对比，讨论指定热点对靶向特异性和结合模式的影响。",
           "expected_behavior": {
             "intent": "refine the VEGF165 aptamer design by constraining ODesign to explicit hotspot residues in the heparin-binding domain and increasing sampling, then compare with the auto-hotspot 40 nt design",
             "parameter_changes": {
@@ -2840,7 +2840,7 @@
             "requires_comparison": true,
             "expected_outputs": [
               "new 40 nt aptamer candidates constrained to hotspot residues A/80,A/82,A/84 with 15 samples",
-              "RhoFold pLDDT, EGARPS native probability, ProteinX ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
+              "RhoFold pLDDT, EGARPS native probability, Protenix ipTM, interface contacts, buried SASA, H-bonds, salt bridges, and ASF distance metrics",
               "side-by-side comparison of explicit-hotspot vs auto-hotspot designs",
               "interpretation of how explicit hotspot specification affects targeting specificity and predicted binding mode"
             ]
@@ -2850,7 +2850,7 @@
       "evaluation_rubric": {
         "round1": {
           "workflow_correct": "rna_aptamer_design selected explicitly",
-          "tool_chain_complete": "hotspot identification -> ODesign JSON -> ODesign inference -> RNA extraction -> GC -> RhoFold -> EGARPS -> ProteinX complex -> interface analysis -> BMC coordinator -> Critic",
+          "tool_chain_complete": "hotspot identification -> ODesign JSON -> ODesign inference -> RNA extraction -> GC -> RhoFold -> EGARPS -> Protenix complex -> interface analysis -> BMC coordinator -> Critic",
           "audit_records_present": "JSON + Markdown artifacts generated",
           "max_duration_seconds": 1800
         },

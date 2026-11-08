@@ -176,7 +176,7 @@ The following files are **not** tracked in the main Git repository and must be p
 | RiboDiffusion | `external_repos/RiboDiffusion/ckpts/exp_inf.pth` (or `exp_inf_large.pth`) |
 | CRGPT | `external_repos/sgrna_design/trained_model/crgen_small/pytorch_model.bin` |
 | CRISOT | `external_repos/CRISOT/models/crisot_score_param.pkl` + `crisot_fingerprint_encoding.pkl` |
-| ProteinX | `external_repos/Protenix/checkpoints/` |
+| Protenix | `external_repos/Protenix/checkpoints/` |
 | EGARPS | `external_repos/EGARPS/esm2_models/` + `rna_fm_models/` |
 
 ---
@@ -286,10 +286,10 @@ PYTHONPATH="$(pwd):$PYTHONPATH" python tests/test_full_length_mrna_e2e_live.py
 |---------|------|-----------|------------------|
 | CRGPT | 8017 | `sgrna_design_service_env` | Weights (`crgen_small/pytorch_model.bin`); ViennaRNA for MCMC; GPU recommended |
 | CRISOT | 8011 | `crisot_service_env` | Weights (`crisot_score_param.pkl`); `cas-offinder` on PATH for genome-wide ops; GPU recommended |
-| ProteinX | 8022 | `proteinx_service` | Weights (`Protenix/checkpoints/`); **GPU required** |
+| Protenix | 8022 | `proteinx_service` | Weights (`Protenix/checkpoints/`); **GPU required** |
 | EGARPS | 8023 | `egarps_env` | Weights (`esm2_models/` + `rna_fm_models/`); **GPU required** |
 | ODesign | 8012 | `odesign_service_env` | Weights (`ckpt/*.pt`); **GPU required** |
 
-> **ProteinX runtime note**: predictions execute in a background thread so `/health` remains responsive. The service is single-worker, so requests are still serialized.
+> **Protenix runtime note**: predictions execute in a background thread so `/health` remains responsive. The service is single-worker, so requests are still serialized.
 
 > For LLM configuration, see `AGENTS.md` §LLM Configuration.

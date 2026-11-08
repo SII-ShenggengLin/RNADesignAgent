@@ -451,9 +451,9 @@ dimensions outvote the confidence dimension.
 
 > **File**: `workflows/rna_aptamer_design.py` | **QualityProfile**: `RNA_APTAMER_QUALITY_PROFILE`
 
-**Purpose**: Design RNA aptamers targeting a protein using ODesign, then validate with ProteinX complex prediction, EGARPS scoring, and interface analysis.
+**Purpose**: Design RNA aptamers targeting a protein using ODesign, then validate with Protenix complex prediction, EGARPS scoring, and interface analysis.
 
-**Pipeline**: hotspot identification → `build_odesign_aptamer_input_json` → `run_odesign_inference` (8012) → hierarchical evaluate (light stage: GC + RhoFold 8005 on all candidates; full stage: ProteinX 8022 + EGARPS 8023 + interface analysis on top `max(5, int(n*0.5))` candidates; EGARPS gated by RhoFold ≥ 65 and GC ∈ [0.25, 0.85]) → score → ASF reference-point ranking
+**Pipeline**: hotspot identification → `build_odesign_aptamer_input_json` → `run_odesign_inference` (8012) → hierarchical evaluate (light stage: GC + RhoFold 8005 on all candidates; full stage: Protenix 8022 + EGARPS 8023 + interface analysis on top `max(5, int(n*0.5))` candidates; EGARPS gated by RhoFold ≥ 65 and GC ∈ [0.25, 0.85]) → score → ASF reference-point ranking
 
 **Required capabilities**
 

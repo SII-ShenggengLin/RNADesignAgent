@@ -508,8 +508,8 @@ class ExtractRnaFromCifOutput(_OutBase):
     model: str
 
 
-class ProteinXProteinOutput(_OutBase):
-    """ProteinX protein structure prediction output schema.
+class ProtenixProteinOutput(_OutBase):
+    """Protenix protein structure prediction output schema.
 
     """
     pdb_filepath: str = ""
@@ -520,8 +520,8 @@ class ProteinXProteinOutput(_OutBase):
     model: str = "proteinx"
 
 
-class ProteinXComplexOutput(_OutBase):
-    """ProteinX RNA-protein complex prediction output schema."""
+class ProtenixComplexOutput(_OutBase):
+    """Protenix RNA-protein complex prediction output schema."""
 
     pdb_filepath: str = ""
     mean_pae: float = 0.0
@@ -1417,7 +1417,7 @@ TOOL_SPECS: Dict[str, ToolSpec] = {
         identity="predict_protein_structure_with_proteinx",
         kind=ToolKind.predictor,
 
-        display_name="ProteinX (Protenix) protein structure prediction",
+        display_name="Protenix (Protenix) protein structure prediction",
         version="0.1.0",
         source="https://github.com/bytedance/Protenix",
         transport=ToolTransport.http,
@@ -1432,8 +1432,8 @@ TOOL_SPECS: Dict[str, ToolSpec] = {
             ToolDependency(name="Proteinx microservice", detail="microservices/proteinx_service (port 8022)"),
         ],
         produces=["pdb_filepath", "mean_pae", "mean_plddt", "ranking_confidence", "model_scores"],
-        input_model=tool_wrappers.ProteinXProteinInput,
-        output_model=ProteinXProteinOutput,
+        input_model=tool_wrappers.ProtenixProteinInput,
+        output_model=ProtenixProteinOutput,
         status=ToolStatus.available,
         examples=[
             ToolExample(
@@ -1454,7 +1454,7 @@ TOOL_SPECS: Dict[str, ToolSpec] = {
             oracle_version="0.1.0",
         ),
 
-        display_name="ProteinX RNA-protein complex prediction",
+        display_name="Protenix RNA-protein complex prediction",
         version="0.1.0",
         source="https://github.com/bytedance/Protenix",
         transport=ToolTransport.http,
@@ -1467,8 +1467,8 @@ TOOL_SPECS: Dict[str, ToolSpec] = {
             ToolDependency(name="Proteinx microservice", detail="microservices/proteinx_service (port 8022)"),
         ],
         produces=["pdb_filepath", "mean_plddt", "ipTM", "ranking_confidence", "model_scores"],
-        input_model=tool_wrappers.ProteinXComplexInput,
-        output_model=ProteinXComplexOutput,
+        input_model=tool_wrappers.ProtenixComplexInput,
+        output_model=ProtenixComplexOutput,
         status=ToolStatus.available,
         examples=[
             ToolExample(

@@ -44,7 +44,7 @@
 | 8019 | `microservices/blast_service/` | BLAST+ | Nucleotide similarity | ✅ Linux |
 | 8020 | `microservices/rna_sequence_metrics_service/` | RNA metrics | GC / U / unpaired fraction | ✅ Linux |
 | 8021 | `microservices/ribodiffusion_service/` | RiboDiffusion | 3D → sequence (diffusion) | ✅ Linux GPU |
-| 8022 | `microservices/proteinx_service/` | ProteinX | Protein structure + RNA-protein complex | ✅ Linux GPU |
+| 8022 | `microservices/proteinx_service/` | Protenix | Protein structure + RNA-protein complex | ✅ Linux GPU |
 | 8023 | `microservices/egarps_service/` | EGARPS | RNA-protein complex scoring | ✅ Linux GPU |
 | 8024 | `microservices/bowtie2_service/` | Bowtie2 | Short-sequence alignment | ✅ Linux |
 
@@ -260,7 +260,7 @@
 - Academic mode requires DSSR and NACCESS licenses.
 - The service `start.sh` activates the `base` Conda environment. The upstream dependencies are expected to be installed in an environment named `egarps_env` (per `start.sh` comments), but the launcher currently uses `base` for uvicorn startup.
 
-### 6.2 ProteinX (Port 8022)
+### 6.2 Protenix (Port 8022)
 
 | Upstream | [bytedance/Protenix](https://github.com/bytedance/Protenix) |
 | Endpoints | `POST /predict/protein`, `POST /predict/complex` |

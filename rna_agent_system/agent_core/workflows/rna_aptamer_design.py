@@ -145,7 +145,7 @@ class RnaAptamerDesignInput(BaseModel):
     proteinx_num_models: int = Field(default=1, description="[proteinx] num_models: Number of inference samples to generate.")
     proteinx_num_recycles: int = Field(default=10, description="[proteinx] num_recycles: Number of Pairformer cycles. Ignored when use_default_params is True.")
     proteinx_msa_mode: str = Field(default='none', description="[proteinx] msa_mode: MSA generation mode. 'none' disables MSA; 'protenix' enables the Protenix MSA server.")
-    proteinx_service_url: str = Field(default='http://127.0.0.1:8022/predict/complex', description="[proteinx] service_url: HTTP endpoint of the ProteinX complex microservice.")
+    proteinx_service_url: str = Field(default='http://127.0.0.1:8022/predict/complex', description="[proteinx] service_url: HTTP endpoint of the Protenix complex microservice.")
     proteinx_timeout_seconds: int = Field(default=7200, description="[proteinx] timeout_seconds: Wrapper-level request timeout.")
     proteinx_model_name: str = Field(default='protenix_base_default_v1.0.0', description="[proteinx] model_name: Protenix model checkpoint name. Microservice-only; wrapper does not expose it.")
     proteinx_use_default_params: bool = Field(default=True, description="[proteinx] use_default_params: Use recommended default parameters for the selected model. Microservice-only.")
@@ -868,7 +868,7 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
             _LOGGER.debug("egarps_skipped_no_odesign_structure")
         metrics["egarps_native_probability"] = egarps_prob
 
-        # ── ProteinX RNA-protein complex prediction (required) ──
+        # ── Protenix RNA-protein complex prediction (required) ──
         iptm: Optional[float] = None
         proteinx_plddt: Optional[float] = None
         proteinx_pdb: Optional[str] = None
@@ -901,7 +901,7 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
                 metrics.setdefault("gated_annotations", []).append("proteinx_ipTM")
             else:
                 raise RuntimeError(
-                    f"ProteinX complex prediction failed: {px_res.error}"
+                    f"Protenix complex prediction failed: {px_res.error}"
                 )
         metrics["proteinx_ipTM"] = iptm
         metrics["proteinx_mean_plddt"] = proteinx_plddt
@@ -964,7 +964,7 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
         """Lightweight evaluation: GC content + RhoFold pLDDT only.
 
         Used for coarse pre-filtering before invoking expensive tools
-        (EGARPS, ProteinX, interface analysis).
+        (EGARPS, Protenix, interface analysis).
         """
         seq = candidate.sequence
         filepath = save_sequence(seq, prefix="aptamer")
@@ -1378,7 +1378,7 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
             if Path(path).exists():
                 return path
             _LOGGER.warning("protein_structure_path_not_found path=%s", path)
-        # If only sequence is provided, predict structure with ProteinX
+        # If only sequence is provided, predict structure with Protenix
         if inp.protein_sequence and not structure_path:
             _LOGGER.info("protein_sequence_only predicting_structure_with_proteinx")
             if not self.capabilities.has("predict_protein_structure_with_proteinx"):
@@ -1740,7 +1740,7 @@ class RnaAptamerDesignWorkflow(BaseDomainWorkflow[RnaAptamerDesignInput, Workflo
             # is always taken from the FIRST chain of the file, regardless of the
             # workflow's chain_id. When that chain is not the protein target —
             # e.g. benchmark structure 1HAO, whose first chain (D) is the DNA
-            # aptamer itself — the extracted "protein" is garbage/none, ProteinX
+            # aptamer itself — the extracted "protein" is garbage/none, Protenix
             # complex prediction is skipped downstream, and every designed
             # candidate gets iptm_component = 0. This is silent: scoring still
             # "works". Before changing this, check experiments/
@@ -2125,7 +2125,7 @@ def score_aptamer_candidate(metrics: dict[str, Any]) -> dict[str, float | None]:
     """Standalone scoring function for aptamer candidates (reusable outside the workflow).
 
     Returns per-objective raw scores for ASF-based reference-point ranking.
-    EGARPS native probability, RhoFold pLDDT, and ProteinX ipTM are each
+    EGARPS native probability, RhoFold pLDDT, and Protenix ipTM are each
     normalised to [0, 1]. The workflow does not compute a weighted-sum
     total_score; ranking is performed via Achievement Scalarizing Function
     distance to a reference point.

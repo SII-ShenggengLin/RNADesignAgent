@@ -257,7 +257,7 @@ CAPABILITY_SERVICE_MAP: dict[str, ToolServiceSpec] = {
         "design_rna_inverse_fold_with_ribodiffusion", "127.0.0.1", 8021, "/health",
         "microservices/ribodiffusion_service/start.sh",
     ),
-    # ProteinX service (port 8022)
+    # Protenix service (port 8022)
     "predict_protein_structure_with_proteinx": ToolServiceSpec(
         "predict_protein_structure_with_proteinx", "127.0.0.1", 8022, "/health",
         "microservices/proteinx_service/start.sh",

@@ -1,4 +1,4 @@
-"""ProteinX (Protenix) microservice for protein tertiary structure prediction.
+"""Protenix (Protenix) microservice for protein tertiary structure prediction.
 
 """
 
@@ -21,7 +21,7 @@ SERVICE_WORKDIR = PROJECT_ROOT / "workspace" / "proteinx_service_runs"
 SERVICE_WORKDIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(
-    title="ProteinX Service",
+    title="Protenix Service",
     description="Predict protein 3D structure from sequence using Protenix.",
     version="0.1.0",
 )
@@ -82,8 +82,8 @@ def _fasta_to_sequences(filepath: str) -> List[Dict[str, Any]]:
     return sequences
 
 
-class ProteinXPredictRequest(BaseModel):
-    """ProteinX prediction request schema.
+class ProtenixPredictRequest(BaseModel):
+    """Protenix prediction request schema.
 
     """
 
@@ -122,8 +122,8 @@ class ProteinXPredictRequest(BaseModel):
     )
 
 
-class ProteinXPredictResponse(BaseModel):
-    """ProteinX prediction response schema.
+class ProtenixPredictResponse(BaseModel):
+    """Protenix prediction response schema.
 
     NOTE (2026-07-27 campaign): despite the name, ``pdb_filepath`` points at
     Protenix's raw mmCIF output (``*_sample_0.cif``). It contains OP3 atoms
@@ -219,9 +219,9 @@ def _parse_best_result(dump_dir: Path, sample_name: str) -> Dict[str, Any]:
     return result
 
 
-@app.post("/predict/protein", response_model=ProteinXPredictResponse)
-async def predict_protein(request: ProteinXPredictRequest) -> ProteinXPredictResponse:
-    """Run ProteinX protein structure prediction."""
+@app.post("/predict/protein", response_model=ProtenixPredictResponse)
+async def predict_protein(request: ProtenixPredictRequest) -> ProtenixPredictResponse:
+    """Run Protenix protein structure prediction."""
     # Validate input file
     try:
         sequences = _fasta_to_sequences(request.sequence_filepath)
@@ -297,7 +297,7 @@ async def predict_protein(request: ProteinXPredictRequest) -> ProteinXPredictRes
             detail=f"Output parsing failed: {exc}. stderr: {proc.stderr[-1000:]}",
         )
 
-    return ProteinXPredictResponse(
+    return ProtenixPredictResponse(
         pdb_filepath=result["pdb_filepath"],
         mean_pae=result["mean_pae"],
         mean_plddt=result["mean_plddt"],
@@ -308,7 +308,7 @@ async def predict_protein(request: ProteinXPredictRequest) -> ProteinXPredictRes
     )
 
 
-class ProteinXComplexRequest(BaseModel):
+class ProtenixComplexRequest(BaseModel):
     """Request schema for RNA-protein complex prediction."""
 
     protein_sequence: str = Field(
@@ -326,7 +326,7 @@ class ProteinXComplexRequest(BaseModel):
     use_default_params: bool = Field(default=True)
 
 
-class ProteinXComplexResponse(BaseModel):
+class ProtenixComplexResponse(BaseModel):
     """Response schema for RNA-protein complex prediction."""
 
     pdb_filepath: str = ""
@@ -339,9 +339,9 @@ class ProteinXComplexResponse(BaseModel):
     note: str = ""
 
 
-@app.post("/predict/complex", response_model=ProteinXComplexResponse)
-async def predict_complex(request: ProteinXComplexRequest) -> ProteinXComplexResponse:
-    """Run ProteinX RNA-protein complex structure prediction."""
+@app.post("/predict/complex", response_model=ProtenixComplexResponse)
+async def predict_complex(request: ProtenixComplexRequest) -> ProtenixComplexResponse:
+    """Run Protenix RNA-protein complex structure prediction."""
     protein_seq = re.sub(r"[^A-Za-z]", "", request.protein_sequence).upper()
     rna_seq = re.sub(r"[^AUGC]", "", request.rna_sequence.upper().replace("T", "U"))
     if not protein_seq:
@@ -436,7 +436,7 @@ async def predict_complex(request: ProteinXComplexRequest) -> ProteinXComplexRes
     if result.get("model_scores"):
         ipTM = float(result["model_scores"][0].get("iptm", 0.0))
 
-    return ProteinXComplexResponse(
+    return ProtenixComplexResponse(
         pdb_filepath=result["pdb_filepath"],
         mean_pae=result["mean_pae"],
         mean_plddt=result["mean_plddt"],

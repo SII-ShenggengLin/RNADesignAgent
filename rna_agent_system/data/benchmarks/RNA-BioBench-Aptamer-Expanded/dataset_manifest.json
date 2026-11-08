@@ -1,7 +1,7 @@
 {
   "dataset_name": "RNA-BioBench-Aptamer-Expanded",
   "schema_version": "1.0.0",
-  "description": "Expanded aptamer campaign pool (Exp 29 follow-up, user-approved 2026-09-04): 19 new targets on top of the frozen RNA-BioBench-Aptamer 20-pool — 12 docking-anchor complex proteins (protein chains retained, RNA/other chains stripped; registered preprocessing) + 7 anchor-set uniprot_fasta proteins (ProteinX structure prediction on first use). Provenance per target in its JSON. Frozen 20-pool stays untouched; this dataset is consumed via --pool expanded.",
+  "description": "Expanded aptamer campaign pool (Exp 29 follow-up, user-approved 2026-09-04): 19 new targets on top of the frozen RNA-BioBench-Aptamer 20-pool — 12 docking-anchor complex proteins (protein chains retained, RNA/other chains stripped; registered preprocessing) + 7 anchor-set uniprot_fasta proteins (Protenix structure prediction on first use). Provenance per target in its JSON. Frozen 20-pool stays untouched; this dataset is consumed via --pool expanded.",
   "created_date": "2026-09-04",
   "targets": [
     "Angiopoietin_2",

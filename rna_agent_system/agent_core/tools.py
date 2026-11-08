@@ -3720,8 +3720,8 @@ def build_odesign_aptamer_input_json(
     }
 
 
-class ProteinXProteinInput(BaseModel):
-    """Input schema for ProteinX (Protenix) protein structure prediction."""
+class ProtenixProteinInput(BaseModel):
+    """Input schema for Protenix (Protenix) protein structure prediction."""
 
     filepath: str = Field(
         ...,
@@ -3750,7 +3750,7 @@ class ProteinXProteinInput(BaseModel):
     )
     service_url: str = Field(
         default="http://127.0.0.1:8022/predict/protein",
-        description="ProteinX microservice endpoint.",
+        description="Protenix microservice endpoint.",
     )
     timeout_seconds: int = Field(
         default=7200,
@@ -3760,7 +3760,7 @@ class ProteinXProteinInput(BaseModel):
     )
 
 
-@tool(args_schema=ProteinXProteinInput)
+@tool(args_schema=ProtenixProteinInput)
 def predict_protein_structure_with_proteinx(
     filepath: str,
     num_models: int = 5,
@@ -3770,7 +3770,7 @@ def predict_protein_structure_with_proteinx(
     service_url: str = "http://127.0.0.1:8022/predict/protein",
     timeout_seconds: int = 7200,
 ) -> dict[str, Any]:
-    """Predict protein 3D structure from sequence using ProteinX (Protenix).
+    """Predict protein 3D structure from sequence using Protenix (Protenix).
 
     Requires the ``proteinx_service`` microservice on port 8022.
     Pass a filepath under ``workspace/`` or an absolute server path.
@@ -3791,7 +3791,7 @@ def predict_protein_structure_with_proteinx(
         response.raise_for_status()
         body = response.json()
     except requests.RequestException as exc:
-        _raise_service_error(exc, "ProteinX")
+        _raise_service_error(exc, "Protenix")
     return {
         "pdb_filepath": str(body.get("pdb_filepath", "")),
         "mean_pae": float(body.get("mean_pae", 0.0)),
@@ -3802,11 +3802,11 @@ def predict_protein_structure_with_proteinx(
     }
 
 
-# ProteinX RNA-protein complex prediction (v0.1.0)
+# Protenix RNA-protein complex prediction (v0.1.0)
 
 
-class ProteinXComplexInput(BaseModel):
-    """Input schema for ProteinX RNA-protein complex structure prediction."""
+class ProtenixComplexInput(BaseModel):
+    """Input schema for Protenix RNA-protein complex structure prediction."""
 
     protein_filepath: str = Field(
         ...,
@@ -3823,7 +3823,7 @@ class ProteinXComplexInput(BaseModel):
     timeout_seconds: int = Field(default=7200, ge=60, le=28800)
 
 
-@tool(args_schema=ProteinXComplexInput)
+@tool(args_schema=ProtenixComplexInput)
 def predict_rna_protein_complex_with_proteinx(
     protein_filepath: str,
     rna_filepath: str,
@@ -3835,7 +3835,7 @@ def predict_rna_protein_complex_with_proteinx(
 ) -> dict[str, Any]:
     """
 
-    Predict RNA-protein complex structure using ProteinX (Protenix).
+    Predict RNA-protein complex structure using Protenix (Protenix).
 """
     protein_abs = _absolute_path_under_project(protein_filepath)
     rna_abs = _absolute_path_under_project(rna_filepath)
@@ -3855,7 +3855,7 @@ def predict_rna_protein_complex_with_proteinx(
         response.raise_for_status()
         body = response.json()
     except requests.RequestException as exc:
-        _raise_service_error(exc, "ProteinX-complex")
+        _raise_service_error(exc, "Protenix-complex")
 
     return {
         "pdb_filepath": str(body.get("pdb_filepath", "")),

@@ -347,7 +347,7 @@ class TestLayer0GpuToolsMocked:
     @patch("agent_core.tools.read_sequence")
     @patch("agent_core.tools.requests.post")
     def test_predict_rna_protein_complex_with_proteinx(self, mock_post, mock_read, mock_copy):
-        """ProteinX returns ipTM and pLDDT (GPU tool, mocked)."""
+        """Protenix returns ipTM and pLDDT (GPU tool, mocked)."""
         from agent_core.tools import predict_rna_protein_complex_with_proteinx
 
         mock_post.return_value.json.return_value = {
@@ -903,7 +903,7 @@ class TestLayer2WorkflowFullPipeline:
         assert "microservices/odesign_service/start.sh" in odesign.start_script
 
     def test_resolve_protein_structure_falls_back_to_sequence_prediction(self, tmp_path):
-        """When only protein_sequence is provided, predict structure with ProteinX."""
+        """When only protein_sequence is provided, predict structure with Protenix."""
         predicted_pdb = tmp_path / "predicted_protein.pdb"
         predicted_pdb.write_text("MODEL 1\nENDMDL\n")
 
